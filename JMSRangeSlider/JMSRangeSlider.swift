@@ -16,9 +16,11 @@ class JMSRangeSlider: NSControl {
     var lowerValue: Double = 0.2
     var upperValue: Double = 0.8
     
+    var previousLocation: CGPoint = CGPoint()
+    
     let trackLayer: CALayer = CALayer()
-    let lowerCellLayer: CALayer = CALayer()
-    let upperCellLayer: CALayer = CALayer()
+    let lowerCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
+    let upperCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
     
     var cellWidth: CGFloat {
         return CGFloat(bounds.height)
@@ -37,6 +39,9 @@ class JMSRangeSlider: NSControl {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    // OVERRIDE
+    
     override func drawRect(dirtyRect: NSRect) {
         super.drawRect(dirtyRect)
     }
@@ -50,14 +55,65 @@ class JMSRangeSlider: NSControl {
         layer?.addSublayer(trackLayer)
         
         lowerCellLayer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [0.4, 0.698, 1.0, 1.0])
+        lowerCellLayer.rangeSlider = self
         lowerCellLayer.cornerRadius = 16.0
         layer?.addSublayer(lowerCellLayer)
         
         upperCellLayer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 0.4, 0.4, 1.0])
+        upperCellLayer.rangeSlider = self
         upperCellLayer.cornerRadius = 16.0
         layer?.addSublayer(upperCellLayer)
         
         updateLayerFrames()
+    }
+    
+    
+    override func mouseDown(evt: NSEvent) {
+        let location = evt.locationInWindow
+        previousLocation = convertPoint(location, fromView: nil)
+        
+        if lowerCellLayer.frame.contains(previousLocation) {
+            lowerCellLayer.highlighted = true
+        } else if upperCellLayer.frame.contains(previousLocation) {
+            upperCellLayer.highlighted = true
+        }
+    }
+    
+    override func mouseDragged(evt: NSEvent) {
+        
+        let location = evt.locationInWindow
+        let pointInView = convertPoint(location, fromView: nil)
+
+        // Get delta
+        let deltaLocation = Double(pointInView.x - previousLocation.x)
+        let deltaValue = (maxValue - minValue) * deltaLocation / Double(bounds.width - cellWidth)
+        
+        previousLocation = pointInView
+        
+        // Update values
+        if lowerCellLayer.highlighted {
+            lowerValue += deltaValue
+            lowerValue = boundValue(lowerValue, toLowerValue: minValue, upperValue: upperValue)
+        } else if upperCellLayer.highlighted {
+            upperValue += deltaValue
+            upperValue = boundValue(upperValue, toLowerValue: lowerValue, upperValue: maxValue)
+        }
+        
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        
+        updateLayerFrames()
+        
+        CATransaction.commit()
+        
+        // Notify
+        NSApp.sendAction(self.action, to: self.target, from: self)
+        
+    }
+    
+    override func mouseUp(evt: NSEvent) {
+        lowerCellLayer.highlighted = false
+        upperCellLayer.highlighted = false
     }
     
     
@@ -66,7 +122,6 @@ class JMSRangeSlider: NSControl {
     // @function    updateLayerFrames
     //
     func updateLayerFrames() {
-        
         trackLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
         trackLayer.setNeedsDisplay()
         
@@ -87,6 +142,13 @@ class JMSRangeSlider: NSControl {
     //
     internal func positionForValue(value: Double) -> Double {
         return Double(bounds.width - cellWidth) * (value - minValue) / (maxValue - minValue) + Double(cellWidth / 2.0)
+    }
+    
+    
+    // @function    boundValue
+    //
+    internal func boundValue(value: Double, toLowerValue lowerValue: Double, upperValue: Double) -> Double {
+        return min(max(value, lowerValue), upperValue)
     }
     
 }

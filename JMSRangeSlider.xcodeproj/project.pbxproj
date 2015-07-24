@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		081A22A71B62C7F500C29E4D /* RangeSliderCellLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081A22A61B62C7F500C29E4D /* RangeSliderCellLayer.swift */; };
 		08E1069F1B61AC01001C9C6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E1069E1B61AC01001C9C6A /* AppDelegate.swift */; };
 		08E106A11B61AC01001C9C6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08E106A01B61AC01001C9C6A /* Assets.xcassets */; };
 		08E106A41B61AC01001C9C6A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E106A21B61AC01001C9C6A /* MainMenu.xib */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		081A22A61B62C7F500C29E4D /* RangeSliderCellLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderCellLayer.swift; sourceTree = "<group>"; };
 		08E1069B1B61AC01001C9C6A /* JMSRangeSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JMSRangeSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08E1069E1B61AC01001C9C6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08E106A01B61AC01001C9C6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				08E106A51B61AC01001C9C6A /* Info.plist */,
 				08E106C71B61AC2F001C9C6A /* JMSRangeSlider.swift */,
 				08E107061B61B2F8001C9C6A /* MainView.swift */,
+				081A22A61B62C7F500C29E4D /* RangeSliderCellLayer.swift */,
 			);
 			path = JMSRangeSlider;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			files = (
 				08E107071B61B2F8001C9C6A /* MainView.swift in Sources */,
 				08E1069F1B61AC01001C9C6A /* AppDelegate.swift in Sources */,
+				081A22A71B62C7F500C29E4D /* RangeSliderCellLayer.swift in Sources */,
 				08E106C81B61AC2F001C9C6A /* JMSRangeSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,6 +482,7 @@
 				08E106C01B61AC01001C9C6A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		08E106C11B61AC01001C9C6A /* Build configuration list for PBXNativeTarget "JMSRangeSliderTests" */ = {
 			isa = XCConfigurationList;
@@ -486,6 +491,7 @@
 				08E106C31B61AC01001C9C6A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		08E106C41B61AC01001C9C6A /* Build configuration list for PBXNativeTarget "JMSRangeSliderUITests" */ = {
 			isa = XCConfigurationList;
@@ -494,6 +500,7 @@
 				08E106C61B61AC01001C9C6A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
