@@ -11,14 +11,32 @@ import QuartzCore
 
 class JMSRangeSlider: NSControl {
 
-    var minValue: Double = 0.0
-    var maxValue: Double = 1.0
-    var lowerValue: Double = 0.2
-    var upperValue: Double = 0.8
+    var minValue: Double = 0.0 {
+        didSet {
+            updateLayerFrames()
+        }
+    }
+    var maxValue: Double = 1.0 {
+        didSet {
+            updateLayerFrames()
+        }
+    }
+
+    var lowerValue: Double = 0.2 {
+        didSet {
+            updateLayerFrames()
+        }
+    }
+
+    var upperValue: Double = 0.8 {
+        didSet {
+            updateLayerFrames()
+        }
+    }
     
     var previousLocation: CGPoint = CGPoint()
     
-    let trackLayer: CALayer = CALayer()
+    let trackLayer: RangeSliderTrackLayer = RangeSliderTrackLayer()
     let lowerCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
     let upperCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
     
@@ -29,6 +47,33 @@ class JMSRangeSlider: NSControl {
     override var frame: CGRect {
         didSet {
             updateLayerFrames()
+        }
+    }
+    
+    var trackTintColor: NSColor = NSColor(white: 0.8, alpha: 1.0) {
+        didSet {
+            trackLayer.setNeedsDisplay()
+        }
+    }
+
+    var trackHighlightTintColor: NSColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0) {
+        didSet {
+            trackLayer.setNeedsDisplay()
+        }
+    }
+
+    var cellTintColor: NSColor = NSColor.whiteColor() {
+        didSet {
+            lowerCellLayer.setNeedsDisplay()
+            upperCellLayer.setNeedsDisplay()
+        }
+    }
+
+    var cornerRadius: CGFloat = 1.0 {
+        didSet {
+            trackLayer.setNeedsDisplay()
+            lowerCellLayer.setNeedsDisplay()
+            upperCellLayer.setNeedsDisplay()
         }
     }
     
@@ -51,16 +96,17 @@ class JMSRangeSlider: NSControl {
         
         self.wantsLayer = true
         
-        trackLayer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [0.753, 0.753, 0.753, 1.0])
+        trackLayer.rangeSlider = self
+        trackLayer.contentsScale = (NSScreen.mainScreen()?.backingScaleFactor)!
         layer?.addSublayer(trackLayer)
         
-        lowerCellLayer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [0.4, 0.698, 1.0, 1.0])
         lowerCellLayer.rangeSlider = self
+        lowerCellLayer.contentsScale = (NSScreen.mainScreen()?.backingScaleFactor)!
         lowerCellLayer.cornerRadius = 16.0
         layer?.addSublayer(lowerCellLayer)
         
-        upperCellLayer.backgroundColor = CGColorCreate(CGColorSpaceCreateDeviceRGB(), [1.0, 0.4, 0.4, 1.0])
         upperCellLayer.rangeSlider = self
+        upperCellLayer.contentsScale = (NSScreen.mainScreen()?.backingScaleFactor)!
         upperCellLayer.cornerRadius = 16.0
         layer?.addSublayer(upperCellLayer)
         
@@ -99,12 +145,7 @@ class JMSRangeSlider: NSControl {
             upperValue = boundValue(upperValue, toLowerValue: lowerValue, upperValue: maxValue)
         }
         
-        CATransaction.begin()
-        CATransaction.setDisableActions(true)
-        
         updateLayerFrames()
-        
-        CATransaction.commit()
         
         // Notify
         NSApp.sendAction(self.action, to: self.target, from: self)
@@ -122,17 +163,22 @@ class JMSRangeSlider: NSControl {
     // @function    updateLayerFrames
     //
     func updateLayerFrames() {
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        
         trackLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
         trackLayer.setNeedsDisplay()
         
-        let lowerThumbCenter = CGFloat(positionForValue(lowerValue))
+        let lowerCellCenter = CGFloat(positionForValue(lowerValue))
         
-        lowerCellLayer.frame = CGRect(x: lowerThumbCenter - cellWidth / 2.0, y: 0.0, width: cellWidth, height: cellWidth)
+        lowerCellLayer.frame = CGRect(x: lowerCellCenter - cellWidth / 2.0, y: 0.0, width: cellWidth, height: cellWidth)
         lowerCellLayer.setNeedsDisplay()
         
-        let upperThumbCenter = CGFloat(positionForValue(upperValue))
-        upperCellLayer.frame = CGRect(x: upperThumbCenter - cellWidth / 2.0, y: 0.0, width: cellWidth, height: cellWidth)
+        let upperCellCenter = CGFloat(positionForValue(upperValue))
+        upperCellLayer.frame = CGRect(x: upperCellCenter - cellWidth / 2.0, y: 0.0, width: cellWidth, height: cellWidth)
         upperCellLayer.setNeedsDisplay()
+        
+        CATransaction.commit()
     }
     
     

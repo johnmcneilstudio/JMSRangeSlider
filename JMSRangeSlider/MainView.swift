@@ -32,6 +32,8 @@ class MainView: NSView {
         rangeSlider.maxValue = startMaxValue
         rangeSlider.lowerValue = startLowerValue
         rangeSlider.upperValue = startUpperValue
+        rangeSlider.trackHighlightTintColor = NSColor(red: 0.4, green: 0.698, blue: 1.0, alpha: 1.0)
+        rangeSlider.cornerRadius = 1.0
         rangeSlider.frame = CGRect(x: margin, y: margin, width: width, height: 31.0)
         rangeSlider.action = "updateRange:"
         rangeSlider.target = self
@@ -39,7 +41,6 @@ class MainView: NSView {
         self.addSubview(rangeSlider)
         
         self.wantsLayer = true
-        
     }
     
     override func drawRect(dirtyRect: NSRect) {
@@ -50,6 +51,7 @@ class MainView: NSView {
         txtMaxVal?.doubleValue = startMaxValue
         txtLowerVal?.doubleValue = startLowerValue
         txtUpperVal?.doubleValue = startUpperValue
+        
     }
     
     func updateRange(sender: AnyObject) {

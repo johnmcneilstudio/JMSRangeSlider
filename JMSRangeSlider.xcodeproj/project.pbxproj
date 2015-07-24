@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		081A22A71B62C7F500C29E4D /* RangeSliderCellLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081A22A61B62C7F500C29E4D /* RangeSliderCellLayer.swift */; };
+		081A22A91B62FCBA00C29E4D /* RangeSliderTrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081A22A81B62FCBA00C29E4D /* RangeSliderTrackLayer.swift */; };
+		081A22AB1B63040E00C29E4D /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 081A22AA1B63040E00C29E4D /* README.md */; };
 		08E1069F1B61AC01001C9C6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E1069E1B61AC01001C9C6A /* AppDelegate.swift */; };
 		08E106A11B61AC01001C9C6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08E106A01B61AC01001C9C6A /* Assets.xcassets */; };
 		08E106A41B61AC01001C9C6A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E106A21B61AC01001C9C6A /* MainMenu.xib */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		081A22A61B62C7F500C29E4D /* RangeSliderCellLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderCellLayer.swift; sourceTree = "<group>"; };
+		081A22A81B62FCBA00C29E4D /* RangeSliderTrackLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderTrackLayer.swift; sourceTree = "<group>"; };
+		081A22AA1B63040E00C29E4D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		08E1069B1B61AC01001C9C6A /* JMSRangeSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JMSRangeSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08E1069E1B61AC01001C9C6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08E106A01B61AC01001C9C6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -79,6 +83,7 @@
 		08E106921B61AC01001C9C6A = {
 			isa = PBXGroup;
 			children = (
+				081A22AA1B63040E00C29E4D /* README.md */,
 				08E1069D1B61AC01001C9C6A /* JMSRangeSlider */,
 				08E106AD1B61AC01001C9C6A /* JMSRangeSliderTests */,
 				08E106B81B61AC01001C9C6A /* JMSRangeSliderUITests */,
@@ -106,6 +111,7 @@
 				08E106C71B61AC2F001C9C6A /* JMSRangeSlider.swift */,
 				08E107061B61B2F8001C9C6A /* MainView.swift */,
 				081A22A61B62C7F500C29E4D /* RangeSliderCellLayer.swift */,
+				081A22A81B62FCBA00C29E4D /* RangeSliderTrackLayer.swift */,
 			);
 			path = JMSRangeSlider;
 			sourceTree = "<group>";
@@ -257,7 +263,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				081A22AB1B63040E00C29E4D /* README.md in Sources */,
 				08E107071B61B2F8001C9C6A /* MainView.swift in Sources */,
+				081A22A91B62FCBA00C29E4D /* RangeSliderTrackLayer.swift in Sources */,
 				08E1069F1B61AC01001C9C6A /* AppDelegate.swift in Sources */,
 				081A22A71B62C7F500C29E4D /* RangeSliderCellLayer.swift in Sources */,
 				08E106C81B61AC2F001C9C6A /* JMSRangeSlider.swift in Sources */,
