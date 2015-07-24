@@ -21,7 +21,7 @@ class RangeSliderCellLayer: CALayer {
     override func drawInContext(ctx: CGContext) {
         if let slider = rangeSlider {
             let cellFrame = bounds.rectByInsetting(dx: 2.0, dy: 2.0)
-            let cornerRadius = cellFrame.height * slider.curvaceousness / 2.0
+            let cornerRadius = cellFrame.height * slider.cornerRadius / 2.0
             let cellPath = NSBezierPath(roundedRect: cellFrame, xRadius: cornerRadius, yRadius: cornerRadius)
             
             // Fill - with a subtle shadow
