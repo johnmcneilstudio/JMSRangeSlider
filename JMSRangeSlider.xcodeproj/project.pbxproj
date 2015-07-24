@@ -12,6 +12,8 @@
 		08E106A41B61AC01001C9C6A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08E106A21B61AC01001C9C6A /* MainMenu.xib */; };
 		08E106AF1B61AC01001C9C6A /* JMSRangeSliderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E106AE1B61AC01001C9C6A /* JMSRangeSliderTests.swift */; };
 		08E106BA1B61AC01001C9C6A /* JMSRangeSliderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E106B91B61AC01001C9C6A /* JMSRangeSliderUITests.swift */; };
+		08E106C81B61AC2F001C9C6A /* JMSRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E106C71B61AC2F001C9C6A /* JMSRangeSlider.swift */; };
+		08E107071B61B2F8001C9C6A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E107061B61B2F8001C9C6A /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,8 @@
 		08E106B51B61AC01001C9C6A /* JMSRangeSliderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JMSRangeSliderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		08E106B91B61AC01001C9C6A /* JMSRangeSliderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JMSRangeSliderUITests.swift; sourceTree = "<group>"; };
 		08E106BB1B61AC01001C9C6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08E106C71B61AC2F001C9C6A /* JMSRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JMSRangeSlider.swift; sourceTree = "<group>"; };
+		08E107061B61B2F8001C9C6A /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,8 @@
 				08E106A01B61AC01001C9C6A /* Assets.xcassets */,
 				08E106A21B61AC01001C9C6A /* MainMenu.xib */,
 				08E106A51B61AC01001C9C6A /* Info.plist */,
+				08E106C71B61AC2F001C9C6A /* JMSRangeSlider.swift */,
+				08E107061B61B2F8001C9C6A /* MainView.swift */,
 			);
 			path = JMSRangeSlider;
 			sourceTree = "<group>";
@@ -248,7 +254,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08E107071B61B2F8001C9C6A /* MainView.swift in Sources */,
 				08E1069F1B61AC01001C9C6A /* AppDelegate.swift in Sources */,
+				08E106C81B61AC2F001C9C6A /* JMSRangeSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
