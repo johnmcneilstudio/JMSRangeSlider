@@ -8,6 +8,13 @@
 
 import Cocoa
 
+enum CellPosition: Int {
+    
+    case Lower = 1
+    case Upper
+    
+}
+
 class RangeSliderCellLayer: CALayer {
     
     var highlighted: Bool = false {
@@ -16,15 +23,32 @@ class RangeSliderCellLayer: CALayer {
         }
     }
     
+    var cellPosition: CellPosition?
+    
     weak var rangeSlider: JMSRangeSlider?
     
     override func drawInContext(ctx: CGContext) {
         if let slider = rangeSlider {
-            let cellFrame = bounds.rectByInsetting(dx: 2.0, dy: 2.0)
-            let cornerRadius = cellFrame.height * slider.cornerRadius / 2.0
-            let cellPath = NSBezierPath(roundedRect: cellFrame, xRadius: cornerRadius, yRadius: cornerRadius)
+            let cellPath: NSBezierPath = NSBezierPath()
+            var beginPoint: NSPoint = NSMakePoint(0, frame.height / 2)
+            var cuttingPoint: NSPoint = NSMakePoint(frame.width, 0)
             
-            // Fill - with a subtle shadow
+            if cellPosition == CellPosition.Upper {
+                beginPoint.y = 0.0
+                cuttingPoint.y = frame.height / 2
+            }
+            
+            // Begin Point
+            cellPath.moveToPoint(beginPoint)
+            
+            cellPath.lineToPoint(NSMakePoint(0, frame.height))
+            cellPath.lineToPoint(NSMakePoint(frame.width, frame.height))
+            
+            // Cutting Point
+            cellPath.lineToPoint(cuttingPoint)
+            cellPath.lineToPoint(beginPoint)
+            
+            // Shadow
             let shadowColor = NSColor.grayColor()
             CGContextSetShadowWithColor(ctx, CGSize(width: 0.0, height: 1.0), 1.0, shadowColor.CGColor)
             CGContextSetFillColorWithColor(ctx, slider.cellTintColor.CGColor)
