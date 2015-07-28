@@ -75,7 +75,6 @@ class RangeSliderTrackLayer: CALayer {
             
             // Fill the track
             CGContextSetFillColorWithColor(ctx, slider.trackTintColor.CGColor)
-            CGContextAddPath(ctx, path.CGPath)
             CGContextFillPath(ctx)
             
             // Fill the highlighted range
@@ -83,7 +82,10 @@ class RangeSliderTrackLayer: CALayer {
             let lowerValuePosition = CGFloat(slider.positionForValue(slider.lowerValue))
             let upperValuePosition = CGFloat(slider.positionForValue(slider.upperValue))
             let rect = CGRect(x: lowerValuePosition, y: 0.0, width: upperValuePosition - lowerValuePosition, height: bounds.height)
-            CGContextFillRect(ctx, rect)
+            
+            let highlightPath = NSBezierPath(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
+            CGContextAddPath(ctx, highlightPath.CGPath)
+            CGContextFillPath(ctx)
         }
     }
     

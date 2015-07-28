@@ -78,8 +78,6 @@ class JMSRangeSlider: NSControl {
     var cornerRadius: CGFloat = 1.0 {
         didSet {
             trackLayer.setNeedsDisplay()
-            lowerCellLayer.setNeedsDisplay()
-            upperCellLayer.setNeedsDisplay()
         }
     }
     
@@ -109,13 +107,11 @@ class JMSRangeSlider: NSControl {
         lowerCellLayer.rangeSlider = self
         lowerCellLayer.cellPosition = CellPosition.Lower
         lowerCellLayer.contentsScale = (NSScreen.mainScreen()?.backingScaleFactor)!
-        lowerCellLayer.cornerRadius = cornerRadius
         layer?.addSublayer(lowerCellLayer)
         
         upperCellLayer.rangeSlider = self
         upperCellLayer.cellPosition = CellPosition.Upper
         upperCellLayer.contentsScale = (NSScreen.mainScreen()?.backingScaleFactor)!
-        upperCellLayer.cornerRadius = cornerRadius
         layer?.addSublayer(upperCellLayer)
         
         updateLayerFrames()

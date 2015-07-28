@@ -33,7 +33,7 @@ class MainView: NSView {
         rangeSlider.lowerValue = startLowerValue
         rangeSlider.upperValue = startUpperValue
         rangeSlider.trackHighlightTintColor = NSColor(red: 0.4, green: 0.698, blue: 1.0, alpha: 1.0)
-        rangeSlider.cornerRadius = 0.0
+        rangeSlider.cornerRadius = 1.0
         rangeSlider.frame = CGRect(x: margin, y: margin, width: width, height: 40.0)
         rangeSlider.action = "updateRange:"
         rangeSlider.target = self
