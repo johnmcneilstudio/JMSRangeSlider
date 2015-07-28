@@ -19,8 +19,8 @@ class MainView: NSView {
     
     let startMinValue: Double = -100
     let startMaxValue: Double = 100
-    let startLowerValue: Double = -100
-    let startUpperValue: Double = 100
+    let startLowerValue: Double = -50
+    let startUpperValue: Double = 50
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
