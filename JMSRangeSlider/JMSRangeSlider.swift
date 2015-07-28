@@ -40,8 +40,14 @@ class JMSRangeSlider: NSControl {
     let lowerCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
     let upperCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
     
-    var cellWidth: CGFloat {
-        return CGFloat(bounds.height)
+    var cellWidth: CGFloat = 20.0 {
+        didSet {
+            updateLayerFrames()
+        }
+    }
+    
+    var cellHeight: CGFloat {
+        return CGFloat(2 * (bounds.height / 3))
     }
     
     override var frame: CGRect {
@@ -72,8 +78,6 @@ class JMSRangeSlider: NSControl {
     var cornerRadius: CGFloat = 1.0 {
         didSet {
             trackLayer.setNeedsDisplay()
-            lowerCellLayer.setNeedsDisplay()
-            upperCellLayer.setNeedsDisplay()
         }
     }
     
@@ -101,13 +105,13 @@ class JMSRangeSlider: NSControl {
         layer?.addSublayer(trackLayer)
         
         lowerCellLayer.rangeSlider = self
+        lowerCellLayer.cellPosition = CellPosition.Lower
         lowerCellLayer.contentsScale = (NSScreen.mainScreen()?.backingScaleFactor)!
-        lowerCellLayer.cornerRadius = 16.0
         layer?.addSublayer(lowerCellLayer)
         
         upperCellLayer.rangeSlider = self
+        upperCellLayer.cellPosition = CellPosition.Upper
         upperCellLayer.contentsScale = (NSScreen.mainScreen()?.backingScaleFactor)!
-        upperCellLayer.cornerRadius = 16.0
         layer?.addSublayer(upperCellLayer)
         
         updateLayerFrames()
@@ -166,16 +170,16 @@ class JMSRangeSlider: NSControl {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-        trackLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
+        trackLayer.frame = CGRectMake(cellWidth, 0, bounds.width - 2 * cellWidth, bounds.height/3)
         trackLayer.setNeedsDisplay()
         
         let lowerCellCenter = CGFloat(positionForValue(lowerValue))
         
-        lowerCellLayer.frame = CGRect(x: lowerCellCenter - cellWidth / 2.0, y: 0.0, width: cellWidth, height: cellWidth)
+        lowerCellLayer.frame = CGRect(x: lowerCellCenter, y: trackLayer.frame.height, width: cellWidth, height: cellHeight)
         lowerCellLayer.setNeedsDisplay()
         
         let upperCellCenter = CGFloat(positionForValue(upperValue))
-        upperCellLayer.frame = CGRect(x: upperCellCenter - cellWidth / 2.0, y: 0.0, width: cellWidth, height: cellWidth)
+        upperCellLayer.frame = CGRect(x: upperCellCenter + cellWidth, y: trackLayer.frame.height, width: cellWidth, height: cellHeight)
         upperCellLayer.setNeedsDisplay()
         
         CATransaction.commit()
@@ -187,7 +191,7 @@ class JMSRangeSlider: NSControl {
     // @function    positionForValue
     //
     internal func positionForValue(value: Double) -> Double {
-        return Double(bounds.width - cellWidth) * (value - minValue) / (maxValue - minValue) + Double(cellWidth / 2.0)
+        return Double(bounds.width - 2 * cellWidth) * (value - minValue) / (maxValue - minValue)
     }
     
     
