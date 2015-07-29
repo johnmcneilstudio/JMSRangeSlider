@@ -4,6 +4,25 @@
 
 ![Screenshot JMSRangeSlider](screenshot.png)
 
+## Requirements
+* OS 10.10+
+* Swift 2
+
+## Installation
+#### CocoaPods
+Add the following line to your `Podfile`:  
+```
+pod 'JMSRangeSlider'
+```
+
+#### Manual
+Drag the following files to your project:  
+```
+JMSRangeSlider/JMSRangeSlider.swift
+JMSRangeSlider/RangeSliderCellLayer.swift
+JMSRangeSlider/RangeSliderTrackLayer.swift
+```
+
 ## [CHANGELOG](./CHANGELOG.md)
 
 ## EXAMPLE
@@ -77,4 +96,8 @@ Type `CGFloat`
 _Optional_  
 Default: `1`  
 
+## DEMO
+There's a demo project in the repo
 
+## LICENSE
+MIT License
