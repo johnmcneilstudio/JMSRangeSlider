@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name		  = "JMSRangeSlider"
-  s.version		= "1.0.1"
+  s.version		= "1.1.0"
   s.summary		= "A Custom Range Slider for OSX"
   s.homepage	= "https://github.com/johnmcneilstudio/JMSRangeSlider"
   s.license		= { :type => 'MIT', :file => 'LICENSE' }

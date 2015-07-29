@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		084FAA431B699086007C828D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 084FAA421B699086007C828D /* Cocoa.framework */; };
+		084FAA441B6990E6007C828D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08A873511B68456300123705 /* Info.plist */; };
 		08A8732E1B6830D300123705 /* JMSRangeSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A8732D1B6830D300123705 /* JMSRangeSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		08A873381B6831FC00123705 /* JMSRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A873351B6831FC00123705 /* JMSRangeSlider.swift */; };
 		08A873391B6831FC00123705 /* RangeSliderCellLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A873361B6831FC00123705 /* RangeSliderCellLayer.swift */; };
@@ -18,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		084FAA421B699086007C828D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		08A8732A1B6830D300123705 /* JMSRangeSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JMSRangeSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		08A8732D1B6830D300123705 /* JMSRangeSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JMSRangeSlider.h; sourceTree = "<group>"; };
 		08A8732F1B6830D300123705 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -37,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				084FAA431B699086007C828D /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +57,7 @@
 		08A873201B6830D300123705 = {
 			isa = PBXGroup;
 			children = (
+				084FAA421B699086007C828D /* Cocoa.framework */,
 				08A8732C1B6830D300123705 /* JMSRangeSlider */,
 				08A873471B68456300123705 /* JMSRangeSlider-DEMO */,
 				08A8732B1B6830D300123705 /* Products */,
@@ -172,8 +177,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				08A873451B68456300123705 /* JMSRangeSlider-DEMO */,
 				08A873291B6830D300123705 /* JMSRangeSlider */,
+				08A873451B68456300123705 /* JMSRangeSlider-DEMO */,
 			);
 		};
 /* End PBXProject section */
@@ -192,6 +197,7 @@
 			files = (
 				08A8734D1B68456300123705 /* Assets.xcassets in Resources */,
 				08A873501B68456300123705 /* Main.storyboard in Resources */,
+				084FAA441B6990E6007C828D /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +414,7 @@
 				08A873541B68456300123705 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
