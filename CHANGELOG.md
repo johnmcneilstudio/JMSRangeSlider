@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v1.1.0
+- Re-structured build as a framework seperated from the demo
+
 ## v1.0.1
 - Fixed cells shape: no more overlapping if both on same values
 
