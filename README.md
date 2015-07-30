@@ -48,53 +48,53 @@ func updateRange(sender: AnyObject) {
 
 ## PROPERTIES
 
-```minValue```  
+#### `minValue`  
 Minimum value  
-Type ```Double```  
+Type `Double`  
 _Optional_  
-Default: 0  
+Default: `0`  
 
-```maxValue```  
+#### `maxValue`  
 Maximum value  
-Type ```Double```  
+Type `Double`  
 _Optional_  
-Default: 1  
+Default: `1`  
 
-```lowerValue```  
+#### `lowerValue`  
 Initial lower value  
-Type ```Double```  
+Type `Double`  
 _Optional_  
-Default: ```minValue```  
+Default: `minValue`  
 
-```upperValue```  
+#### `upperValue`  
 Initial upper value  
-Type ```Double```  
+Type `Double`  
 _Optional_  
-Default: ```maxValue```  
+Default: `maxValue`  
 
-```trackTintColor```  
+#### `trackTintColor`  
 Tint color of track  
-Type ```NSColor```  
+Type `NSColor`  
 _Optional_  
-Default: ```white:0.8, alpha:1```  
+Default: `white:0.8, alpha:1`  
 
-```trackHighlightTintColor```  
+#### `trackHighlightTintColor`  
 Highlight tint color of track  
-Type ```NSColor```  
+Type `NSColor`  
 _Optional_  
-Default: ```rgba(0,0,0,1)```  
+Default: `rgba(0,0,0,1)`  
 
-```cellTintColor```  
+#### `cellTintColor`  
 Tint color of cells  
-Type ```NSColor```  
+Type `NSColor`  
 _Optional_  
-Default: ```white```  
+Default: `white`  
 
-```cornerRadius```  
+#### `cornerRadius`  
 Corner radius of cell  
-Type ```CGFloat```  
+Type `CGFloat`  
 _Optional_  
-Default: ```1```  
+Default: `1`  
 
 ## DEMO
 There's a demo project in the repo
