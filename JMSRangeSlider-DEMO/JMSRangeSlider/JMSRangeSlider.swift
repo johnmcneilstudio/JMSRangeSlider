@@ -9,6 +9,13 @@
 import Cocoa
 import QuartzCore
 
+public enum JMSRangeSliderDirection: Int {
+    
+    case Horizontal = 1
+    case Vertical
+    
+}
+
 public class JMSRangeSlider: NSControl {
 
     private var previousLocation: CGPoint = CGPoint()
@@ -17,57 +24,71 @@ public class JMSRangeSlider: NSControl {
     private let lowerCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
     private let upperCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
     
+    // Slider Direction
+    public var direction: JMSRangeSliderDirection = JMSRangeSliderDirection.Horizontal
+    
+    // Slider minimum value
     public var minValue: Double = 0.0 {
         didSet {
             updateLayerFrames()
         }
     }
+    
+    // Slider maximum value
     public var maxValue: Double = 1.0 {
         didSet {
             updateLayerFrames()
         }
     }
     
+    // Slider lower value
     public var lowerValue: Double = 0.2 {
         didSet {
             updateLayerFrames()
         }
     }
     
+    // Slider upper value
     public var upperValue: Double = 0.8 {
         didSet {
             updateLayerFrames()
         }
     }
     
+    // Cell width
     public var cellWidth: CGFloat = 20.0 {
         didSet {
             updateLayerFrames()
         }
     }
     
+    // Cell height
     public var cellHeight: CGFloat {
         return CGFloat(2 * (bounds.height / 3))
     }
     
+    // Frame
     public override var frame: CGRect {
         didSet {
             updateLayerFrames()
         }
     }
     
+    // Track tint color
     public var trackTintColor: NSColor = NSColor(white: 0.8, alpha: 1.0) {
         didSet {
             trackLayer.setNeedsDisplay()
         }
     }
 
+    // Track highlight tint color
     public var trackHighlightTintColor: NSColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0) {
         didSet {
             trackLayer.setNeedsDisplay()
         }
     }
 
+    // Cell tint color
     public var cellTintColor: NSColor = NSColor.whiteColor() {
         didSet {
             lowerCellLayer.setNeedsDisplay()
@@ -75,6 +96,7 @@ public class JMSRangeSlider: NSControl {
         }
     }
 
+    // Corner radius
     public var cornerRadius: CGFloat = 1.0 {
         didSet {
             trackLayer.setNeedsDisplay()
@@ -138,8 +160,9 @@ public class JMSRangeSlider: NSControl {
         let pointInView = convertPoint(location, fromView: nil)
 
         // Get delta
-        let deltaLocation = Double(pointInView.x - previousLocation.x)
-        let deltaValue = (maxValue - minValue) * deltaLocation / Double(bounds.width - cellWidth)
+        let deltaLocation = self.isVertical() ? Double(pointInView.y - previousLocation.y) : Double(pointInView.x - previousLocation.x)
+        
+        let deltaValue = (maxValue - minValue) * deltaLocation / (self.isVertical() ? Double(bounds.height - cellHeight) : Double(bounds.width - cellWidth))
         
         previousLocation = pointInView
         
@@ -164,6 +187,11 @@ public class JMSRangeSlider: NSControl {
         upperCellLayer.highlighted = false
     }
     
+    // Is Vertical slider ?
+    public func isVertical() -> Bool {
+        return self.direction == JMSRangeSliderDirection.Vertical
+    }
+    
     
     // PUBLIC
     
@@ -173,16 +201,25 @@ public class JMSRangeSlider: NSControl {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-        trackLayer.frame = CGRectMake(cellWidth, 0, bounds.width - 2 * cellWidth, bounds.height/3)
-        trackLayer.setNeedsDisplay()
-        
         let lowerCellCenter = CGFloat(positionForValue(lowerValue))
-        
-        lowerCellLayer.frame = CGRect(x: lowerCellCenter, y: trackLayer.frame.height, width: cellWidth, height: cellHeight)
-        lowerCellLayer.setNeedsDisplay()
-        
         let upperCellCenter = CGFloat(positionForValue(upperValue))
-        upperCellLayer.frame = CGRect(x: upperCellCenter + cellWidth, y: trackLayer.frame.height, width: cellWidth, height: cellHeight)
+        
+        // Is vertical ?
+        if self.isVertical() {
+            trackLayer.frame = CGRectMake(cellHeight, 0, bounds.height - 2 * cellHeight, bounds.width/3)
+            
+            NSLog("trackLayer.frame :: \(trackLayer.frame) | \(bounds.height), \(bounds.width)")
+            
+            lowerCellLayer.frame = CGRect(x: trackLayer.frame.width, y: lowerCellCenter, width: cellWidth, height: cellHeight)
+            upperCellLayer.frame = CGRect(x: trackLayer.frame.width, y: upperCellCenter + cellWidth, width: cellWidth, height: cellHeight)
+        } else {
+            trackLayer.frame = CGRectMake(cellWidth, 0, bounds.width - 2 * cellWidth, bounds.height/3)
+            lowerCellLayer.frame = CGRect(x: lowerCellCenter, y: trackLayer.frame.height, width: cellWidth, height: cellHeight)
+            upperCellLayer.frame = CGRect(x: upperCellCenter + cellWidth, y: trackLayer.frame.height, width: cellWidth, height: cellHeight)
+        }
+        
+        trackLayer.setNeedsDisplay()
+        lowerCellLayer.setNeedsDisplay()
         upperCellLayer.setNeedsDisplay()
         
         CATransaction.commit()
@@ -194,7 +231,11 @@ public class JMSRangeSlider: NSControl {
     // @function    positionForValue
     //
     internal func positionForValue(value: Double) -> Double {
-        return Double(bounds.width - 2 * cellWidth) * (value - minValue) / (maxValue - minValue)
+        if self.isVertical() {
+            return Double(bounds.height - 2 * cellHeight) * (value - minValue) / (maxValue - minValue)
+        } else {
+            return Double(bounds.width - 2 * cellWidth) * (value - minValue) / (maxValue - minValue)
+        }
     }
     
     

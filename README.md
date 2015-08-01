@@ -16,12 +16,7 @@ pod 'JMSRangeSlider'
 ```
 
 #### Manual
-Drag the following files to your project:  
-```
-JMSRangeSlider/JMSRangeSlider.swift
-JMSRangeSlider/RangeSliderCellLayer.swift
-JMSRangeSlider/RangeSliderTrackLayer.swift
-```
+Copy the folder `JMSRangeSlider` to your project
 
 ## [CHANGELOG](./CHANGELOG.md)
 
