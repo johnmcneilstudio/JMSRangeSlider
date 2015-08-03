@@ -32,32 +32,34 @@ class RangeSliderCellLayer: CALayer {
             
             var cellPoints = (begin: NSPoint(x: 0, y: 0), second: NSPoint(x: 0, y: 0), third: NSPoint(x: 0, y: 0), fourth: NSPoint(x: 0, y: 0))
             let cellPath: NSBezierPath = NSBezierPath()
+            let sliceCutHeight: CGFloat = 2 * frame.height / 3
+            let sliceCutWidth: CGFloat = frame.width / 3
             
             switch slider.cellsSide {
                 
             // Slider Horizontal, cells on top
             case .Top:
-                cellPoints.begin = NSMakePoint(0, frame.height / 2)
+                cellPoints.begin = NSMakePoint(0, sliceCutHeight)
                 cellPoints.second = NSMakePoint(0, frame.height)
                 cellPoints.third = NSMakePoint(frame.width, frame.height)
                 cellPoints.fourth = NSMakePoint(frame.width, 0)
                 
                 if cellPosition == CellPosition.Upper {
                     cellPoints.begin.y = 0.0
-                    cellPoints.fourth.y = frame.height / 2
+                    cellPoints.fourth.y = sliceCutHeight
                 }
                 break
                 
             // Slider Horizontal, cells on bottom
             case .Bottom:
                 cellPoints.begin = NSMakePoint(0, 0)
-                cellPoints.second = NSMakePoint(0, frame.height / 2)
+                cellPoints.second = NSMakePoint(0, sliceCutHeight)
                 cellPoints.third = NSMakePoint(frame.width, frame.height)
                 cellPoints.fourth = NSMakePoint(frame.width, 0)
                 
                 if cellPosition == CellPosition.Upper {
                     cellPoints.second.y = frame.height
-                    cellPoints.third.y = frame.height / 2
+                    cellPoints.third.y = sliceCutHeight
                 }
                 break
             
@@ -66,24 +68,24 @@ class RangeSliderCellLayer: CALayer {
                 cellPoints.begin = NSMakePoint(0, 0)
                 cellPoints.second = NSMakePoint(0, frame.height)
                 cellPoints.third = NSMakePoint(frame.width, frame.height)
-                cellPoints.fourth = NSMakePoint(frame.width / 2, 0)
+                cellPoints.fourth = NSMakePoint(sliceCutWidth, 0)
                 
                 if cellPosition == CellPosition.Upper {
-                    cellPoints.third.x = frame.width / 2
+                    cellPoints.third.x = sliceCutWidth
                     cellPoints.fourth.x = frame.width
                 }
                 break
                 
             // Slider vertical, cells on right
             case .Right:
-                cellPoints.begin = NSMakePoint(frame.width / 2, 0)
+                cellPoints.begin = NSMakePoint(sliceCutWidth, 0)
                 cellPoints.second = NSMakePoint(0, frame.height)
                 cellPoints.third = NSMakePoint(frame.width, frame.height)
                 cellPoints.fourth = NSMakePoint(frame.width, 0)
                 
                 if cellPosition == CellPosition.Upper {
                     cellPoints.begin.x = 0
-                    cellPoints.second.x = frame.width / 2
+                    cellPoints.second.x = sliceCutWidth
                 }
                 break
                 

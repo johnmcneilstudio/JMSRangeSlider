@@ -206,7 +206,6 @@
 			files = (
 				08A8734D1B68456300123705 /* Assets.xcassets in Resources */,
 				08A873501B68456300123705 /* Main.storyboard in Resources */,
-				084FAA441B6990E6007C828D /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

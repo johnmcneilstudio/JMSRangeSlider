@@ -74,14 +74,14 @@ public class JMSRangeSlider: NSControl {
     }
     
     // Slider lower value
-    public var lowerValue: Double = 0.2 {
+    public var lowerValue: Double = 0.0 {
         didSet {
             updateLayerFrames()
         }
     }
     
     // Slider upper value
-    public var upperValue: Double = 0.8 {
+    public var upperValue: Double = 1.0 {
         didSet {
             updateLayerFrames()
         }
@@ -95,13 +95,9 @@ public class JMSRangeSlider: NSControl {
     }
     
     // Cell height
-    public var cellHeight: CGFloat {
-        get {
-            if (isVertical()) {
-                return CGFloat(2 * (bounds.width / 3))
-            } else {
-                return CGFloat(2 * (bounds.height / 3))
-            }
+    public var cellHeight: CGFloat = 20.0 {
+        didSet {
+            updateLayerFrames()
         }
     }
     
@@ -112,8 +108,15 @@ public class JMSRangeSlider: NSControl {
         }
     }
     
+    // Track thickness
+    public var trackThickness: CGFloat = 10.0 {
+        didSet {
+            updateLayerFrames()
+        }
+    }
+    
     // Track tint color
-    public var trackTintColor: NSColor = NSColor(white: 0.8, alpha: 1.0) {
+    public var trackTintColor: NSColor = NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0) {
         didSet {
             trackLayer.setNeedsDisplay()
         }
@@ -244,13 +247,30 @@ public class JMSRangeSlider: NSControl {
         
         // Is vertical ?
         if self.isVertical() {
-            trackLayer.frame = CGRectMake(cellHeight, 0, bounds.width - 2 * cellHeight, bounds.height)
-            lowerCellLayer.frame = CGRect(x: trackLayer.frame.width, y: lowerCellCenter, width: cellWidth, height: cellHeight)
-            upperCellLayer.frame = CGRect(x: trackLayer.frame.width, y: upperCellCenter + cellWidth, width: cellWidth, height: cellHeight)
+            trackLayer.frame = CGRectMake(self.cellWidth, self.cellHeight, self.trackThickness, bounds.height - 2 * self.cellHeight)
+            
+            lowerCellLayer.frame = CGRect(x: 0, y: lowerCellCenter, width: cellWidth, height: cellHeight)
+            upperCellLayer.frame = CGRect(x: 0, y: upperCellCenter + cellHeight, width: cellWidth, height: cellHeight)
+            
+            // If Cells on the right side
+            if cellsSide == JMSRangeSliderCellsSide.Right {
+                lowerCellLayer.frame.origin.x = trackLayer.frame.origin.x + trackLayer.frame.width
+                upperCellLayer.frame.origin.x = trackLayer.frame.origin.x + trackLayer.frame.width
+            }
+            
+        // Is Horizontal ?
         } else {
-            trackLayer.frame = CGRectMake(cellWidth, 0, bounds.width - 2 * cellWidth, bounds.height/3)
-            lowerCellLayer.frame = CGRect(x: lowerCellCenter, y: trackLayer.frame.height, width: cellWidth, height: cellHeight)
-            upperCellLayer.frame = CGRect(x: upperCellCenter + cellWidth, y: trackLayer.frame.height, width: cellWidth, height: cellHeight)
+            trackLayer.frame = CGRectMake(self.cellWidth, self.cellHeight, bounds.width - 2 * cellWidth, self.trackThickness)
+            
+            let cellPosY: CGFloat = trackLayer.frame.origin.y + self.trackThickness
+            
+            lowerCellLayer.frame = CGRect(x: lowerCellCenter, y: cellPosY, width: cellWidth, height: cellHeight)
+            upperCellLayer.frame = CGRect(x: upperCellCenter + cellWidth, y: cellPosY, width: cellWidth, height: cellHeight)
+            
+            if cellsSide == JMSRangeSliderCellsSide.Bottom {
+                lowerCellLayer.frame.origin.y = self.trackLayer.frame.origin.y - self.cellHeight
+                upperCellLayer.frame.origin.y = self.trackLayer.frame.origin.y - self.cellHeight
+            }
         }
         
         trackLayer.setNeedsDisplay()

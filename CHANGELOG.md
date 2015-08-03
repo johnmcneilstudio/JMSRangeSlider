@@ -1,7 +1,11 @@
 # CHANGELOG
 
-## v1.2.0
-- Added option to build vertical slider
+## v2.0.0
+- Added `direction` attribute to specify slider direction ( Horizontal / Vertical )  
+- Added `cellsSide` attribute to specify cells side ( Top / Bottom / Left / Right)  
+- Added `trackThickness` attribute to specify the track thickness  
+- `cellWidth` and `cellHeight` are now part of the public API to let users decide the cells' width & height  
+- Slider is now redrawn when attributes change  
 
 ## v1.1.0
 - Re-structured build as a framework seperated from the demo
