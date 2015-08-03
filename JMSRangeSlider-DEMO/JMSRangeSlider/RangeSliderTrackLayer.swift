@@ -68,7 +68,7 @@ class RangeSliderTrackLayer: CALayer {
     override func drawInContext(ctx: CGContext) {
         if let slider = rangeSlider {
             // Clip
-            let cornerRadius = bounds.height * slider.cornerRadius / 2.0
+            let cornerRadius = (slider.isVertical() ? bounds.width : bounds.height) * slider.cornerRadius / 2.0
             let path = NSBezierPath(roundedRect: bounds, xRadius: cornerRadius, yRadius: cornerRadius)
             
             CGContextAddPath(ctx, path.CGPath)
@@ -89,8 +89,6 @@ class RangeSliderTrackLayer: CALayer {
             } else {
                 rect = CGRect(x: lowerValuePosition, y: 0.0, width: upperValuePosition - lowerValuePosition, height: bounds.height)
             }
-            
-            NSLog("track rect :: \(rect)")
             
             let highlightPath = NSBezierPath(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
             CGContextAddPath(ctx, highlightPath.CGPath)

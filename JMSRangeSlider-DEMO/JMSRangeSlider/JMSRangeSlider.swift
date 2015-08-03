@@ -16,6 +16,15 @@ public enum JMSRangeSliderDirection: Int {
     
 }
 
+public enum JMSRangeSliderCellsSide: Int {
+    
+    case Top = 1
+    case Bottom
+    case Left
+    case Right
+    
+}
+
 public class JMSRangeSlider: NSControl {
 
     private var previousLocation: CGPoint = CGPoint()
@@ -24,8 +33,31 @@ public class JMSRangeSlider: NSControl {
     private let lowerCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
     private let upperCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
     
-    // Slider Direction
-    public var direction: JMSRangeSliderDirection = JMSRangeSliderDirection.Horizontal
+    // Slider Direction ( Horizontal / Vertical )
+    public var direction: JMSRangeSliderDirection = JMSRangeSliderDirection.Horizontal {
+        didSet {
+            // Default values 
+            // Left side when vertical position
+            // Top side when horizontal position
+            if direction == JMSRangeSliderDirection.Vertical {
+                if cellsSide != JMSRangeSliderCellsSide.Left || cellsSide != JMSRangeSliderCellsSide.Right {
+                    cellsSide = JMSRangeSliderCellsSide.Left
+                }
+            } else {
+                if cellsSide != JMSRangeSliderCellsSide.Top || cellsSide != JMSRangeSliderCellsSide.Bottom {
+                    cellsSide = JMSRangeSliderCellsSide.Top
+                }
+            }
+            updateLayerFrames()
+        }
+    }
+    
+    // Cells side ( Top / Bottom / Left / Right )
+    public var cellsSide: JMSRangeSliderCellsSide = JMSRangeSliderCellsSide.Top {
+        didSet {
+            updateLayerFrames()
+        }
+    }
     
     // Slider minimum value
     public var minValue: Double = 0.0 {
@@ -64,7 +96,13 @@ public class JMSRangeSlider: NSControl {
     
     // Cell height
     public var cellHeight: CGFloat {
-        return CGFloat(2 * (bounds.height / 3))
+        get {
+            if (isVertical()) {
+                return CGFloat(2 * (bounds.width / 3))
+            } else {
+                return CGFloat(2 * (bounds.height / 3))
+            }
+        }
     }
     
     // Frame
@@ -206,10 +244,7 @@ public class JMSRangeSlider: NSControl {
         
         // Is vertical ?
         if self.isVertical() {
-            trackLayer.frame = CGRectMake(cellHeight, 0, bounds.height - 2 * cellHeight, bounds.width/3)
-            
-            NSLog("trackLayer.frame :: \(trackLayer.frame) | \(bounds.height), \(bounds.width)")
-            
+            trackLayer.frame = CGRectMake(cellHeight, 0, bounds.width - 2 * cellHeight, bounds.height)
             lowerCellLayer.frame = CGRect(x: trackLayer.frame.width, y: lowerCellCenter, width: cellWidth, height: cellHeight)
             upperCellLayer.frame = CGRect(x: trackLayer.frame.width, y: upperCellCenter + cellWidth, width: cellWidth, height: cellHeight)
         } else {

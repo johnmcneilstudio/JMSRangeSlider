@@ -11,7 +11,7 @@ import JMSRangeSlider
 
 class ViewController: NSViewController {
 
-    let rangeSlider: JMSRangeSlider = JMSRangeSlider(frame: CGRectZero)
+    let horizontalRangeSlider: JMSRangeSlider = JMSRangeSlider(frame: CGRectZero)
     let verticalRangeSlider: JMSRangeSlider = JMSRangeSlider(frame: CGRectZero)
     
     let horizontalLine: NSBox = NSBox()
@@ -21,13 +21,15 @@ class ViewController: NSViewController {
     let startLowerValue: Double = -50
     let startUpperValue: Double = 50
     
-    var txtMinVal: NSTextField = NSTextField()
-    var txtMaxVal: NSTextField = NSTextField()
-    var txtLowerVal: NSTextField = NSTextField()
-    var txtUpperVal: NSTextField = NSTextField()
     var chkCornerRadius: NSButton = NSButton()
-    
     var txtVertical: NSTextField = NSTextField()
+    var txtHorizontal: NSTextField = NSTextField()
+    
+    var horizontalCellsSideTop: NSButton = NSButton()
+    var horizontalCellsSideBottom: NSButton = NSButton()
+    
+    var verticalCellsSideLeft: NSButton = NSButton()
+    var verticalCellsSideRight: NSButton = NSButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,14 +40,8 @@ class ViewController: NSViewController {
         // Add Range slider
         self.addRangeSlider()
         
-        // Add seperator
-        self.addSeperator()
-        
         // Add vertical slider
         self.addVerticalRangeSlider()
-        
-        // Add textfields for vertical slider
-        self.addVerticalTextFields()
         
         // Update text fields
         self.updateTextFields()
@@ -53,98 +49,124 @@ class ViewController: NSViewController {
     
     
     func addTextFields() {
-        txtMinVal.frame = CGRectMake(15, self.view.frame.height - 40, 300, 30.0)
-        txtMinVal.bordered = false
-        txtMinVal.backgroundColor = nil
-        txtMinVal.selectable = false
-        self.view.addSubview(txtMinVal)
+        // Text
+        txtHorizontal.frame = CGRectMake(20, self.view.frame.height - 90, 300, 70)
+        txtHorizontal.bordered = false
+        txtHorizontal.backgroundColor = nil
+        txtHorizontal.selectable = false
+        self.view.addSubview(txtHorizontal)
         
-        txtMaxVal.frame = CGRectMake(15, self.view.frame.height - 65, 300, 30.0)
-        txtMaxVal.bordered = false
-        txtMaxVal.backgroundColor = nil
-        txtMaxVal.selectable = false
-        self.view.addSubview(txtMaxVal)
-        
-        txtLowerVal.frame = CGRectMake(15, self.view.frame.height - 90, 300, 30.0)
-        txtLowerVal.bordered = false
-        txtLowerVal.backgroundColor = nil
-        txtLowerVal.selectable = false
-        self.view.addSubview(txtLowerVal)
-        
-        txtUpperVal.frame = CGRectMake(15, self.view.frame.height - 115, 300, 30.0)
-        txtUpperVal.bordered = false
-        txtUpperVal.backgroundColor = nil
-        txtUpperVal.selectable = false
-        self.view.addSubview(txtUpperVal)
-        
-        chkCornerRadius.frame = CGRectMake(300, self.view.frame.height - 40, 300, 30.0)
+        // Corner Radius
+        chkCornerRadius.frame = CGRectMake(300, self.view.frame.height - 40, 300, 30)
         chkCornerRadius.setButtonType(NSButtonType.SwitchButton)
         chkCornerRadius.title = "Corner Radius"
         chkCornerRadius.state = 1
         chkCornerRadius.action = "toggleCornerRadius:"
         self.view.addSubview(chkCornerRadius)
-    }
-    
-    
-    func addVerticalTextFields() {
-        txtVertical.frame = CGRectMake(self.view.frame.width / 2, horizontalLine.frame.origin.y - 150, self.view.frame.width / 2, 100)
+        
+        // Cells Side
+        horizontalCellsSideTop.frame = CGRectMake(300, chkCornerRadius.frame.origin.y - 40, 300, 30)
+        horizontalCellsSideTop.setButtonType(NSButtonType.RadioButton)
+        horizontalCellsSideTop.title = "Top"
+        horizontalCellsSideTop.state = 1
+        horizontalCellsSideTop.action = "toggleHorizontalCellsSide:"
+        self.view.addSubview(horizontalCellsSideTop)
+        
+        horizontalCellsSideBottom.frame = CGRectMake(300, horizontalCellsSideTop.frame.origin.y - 20, 300, 30)
+        horizontalCellsSideBottom.setButtonType(NSButtonType.RadioButton)
+        horizontalCellsSideBottom.title = "Bottom"
+        horizontalCellsSideBottom.state = 0
+        horizontalCellsSideBottom.action = "toggleHorizontalCellsSide:"
+        self.view.addSubview(horizontalCellsSideBottom)
+        
+        
+        // Separator
+        horizontalLine.frame = CGRectMake(10, txtHorizontal.frame.origin.y - 100, self.view.frame.width - 20, 2.0)
+        self.view.addSubview(horizontalLine)
+        
+        // Text
+        txtVertical.frame = CGRectMake(20, horizontalLine.frame.origin.y - 100, self.view.frame.width / 2, 80)
         txtVertical.bordered = false
         txtVertical.backgroundColor = nil
         txtVertical.selectable = false
         self.view.addSubview(txtVertical)
+        
+        
+        // Cells Side
+        verticalCellsSideLeft.frame = CGRectMake(20, txtVertical.frame.origin.y - 40, 300, 30)
+        verticalCellsSideLeft.setButtonType(NSButtonType.RadioButton)
+        verticalCellsSideLeft.title = "Left"
+        verticalCellsSideLeft.state = 1
+        verticalCellsSideLeft.action = "toggleVerticalCellsSide:"
+        self.view.addSubview(verticalCellsSideLeft)
+        
+        verticalCellsSideRight.frame = CGRectMake(20, verticalCellsSideLeft.frame.origin.y - 20, 300, 30)
+        verticalCellsSideRight.setButtonType(NSButtonType.RadioButton)
+        verticalCellsSideRight.title = "Right"
+        verticalCellsSideRight.state = 0
+        verticalCellsSideRight.action = "toggleVerticalCellsSide:"
+        self.view.addSubview(verticalCellsSideRight)
     }
     
     
     func updateTextFields() {
-        txtMinVal.stringValue =     "Min    : \(startMinValue)"
-        txtMaxVal.stringValue =     "Max    : \(startMaxValue)"
-        txtLowerVal.stringValue =   "Lower  : \(rangeSlider.lowerValue)"
-        txtUpperVal.stringValue =   "Upper  : \(rangeSlider.upperValue)"
-        
+        txtHorizontal.stringValue = "Min: \(startMinValue) \nMax: \(startMaxValue) \nLower: \(horizontalRangeSlider.lowerValue) \nUpper: \(horizontalRangeSlider.upperValue)"
         txtVertical.stringValue = "Min: \(startMinValue) \nMax: \(startMaxValue) \nLower: \(verticalRangeSlider.lowerValue) \nUpper: \(verticalRangeSlider.upperValue)"
     }
     
     
     func toggleCornerRadius(sender: AnyObject) {
-        rangeSlider.cornerRadius = chkCornerRadius.state == 1 ? 1.0: 0.0
+        horizontalRangeSlider.cornerRadius = chkCornerRadius.state == 1 ? 1.0: 0.0
     }
+    
+    func toggleHorizontalCellsSide(sender: AnyObject) {
+        if sender as! NSButton == horizontalCellsSideTop {
+            horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Top
+        } else {
+            horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Bottom
+        }
+    }
+    
+    func toggleVerticalCellsSide(sender: AnyObject) {
+        if sender as! NSButton == verticalCellsSideLeft {
+            verticalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Left
+        } else {
+            verticalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Right
+        }
+    }
+    
     
     
     func addRangeSlider() {
         let margin: CGFloat = 20.0
         let width = self.view.bounds.width - 2.0 * margin
         
-        rangeSlider.trackHighlightTintColor = NSColor(red: 0.4, green: 0.698, blue: 1.0, alpha: 1.0)
-        rangeSlider.minValue = startMinValue
-        rangeSlider.maxValue = startMaxValue
-        rangeSlider.lowerValue = startLowerValue
-        rangeSlider.upperValue = startUpperValue
-        rangeSlider.cornerRadius = 1.0
-        rangeSlider.frame = CGRect(x: margin, y: txtUpperVal.frame.origin.y - 50.0, width: width, height: 40.0)
-        rangeSlider.action = "updateRange:"
-        rangeSlider.target = self
+        horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Bottom
+        horizontalRangeSlider.trackHighlightTintColor = NSColor(red: 0.4, green: 0.698, blue: 1.0, alpha: 1.0)
+        horizontalRangeSlider.minValue = startMinValue
+        horizontalRangeSlider.maxValue = startMaxValue
+        horizontalRangeSlider.lowerValue = startLowerValue
+        horizontalRangeSlider.upperValue = startUpperValue
+        horizontalRangeSlider.cornerRadius = 1.0
+        horizontalRangeSlider.frame = CGRect(x: margin, y: txtHorizontal.frame.origin.y - txtHorizontal.frame.height, width: width, height: 40.0)
+        horizontalRangeSlider.action = "updateRange:"
+        horizontalRangeSlider.target = self
         
-//        self.view.addSubview(rangeSlider)
+        self.view.addSubview(horizontalRangeSlider)
         
         self.view.wantsLayer = true
     }
     
     
-    func addSeperator() {
-        horizontalLine.frame = CGRectMake(10, rangeSlider.frame.origin.y - 30, self.view.frame.width - 20, 2.0)
-        self.view.addSubview(horizontalLine)
-    }
-    
-    
     func addVerticalRangeSlider() {
         verticalRangeSlider.direction = JMSRangeSliderDirection.Vertical
-        verticalRangeSlider.trackHighlightTintColor = NSColor(red: 0.4, green: 0.698, blue: 1.0, alpha: 1.0)
+        verticalRangeSlider.trackHighlightTintColor = NSColor(red: 1, green: 0.48, blue: 0.4, alpha: 1.0)
         verticalRangeSlider.minValue = startMinValue
         verticalRangeSlider.maxValue = startMaxValue
         verticalRangeSlider.lowerValue = startLowerValue
         verticalRangeSlider.upperValue = startUpperValue
         verticalRangeSlider.cornerRadius = 1.0
-        verticalRangeSlider.frame = CGRectMake(0, horizontalLine.frame.origin.y - 320, 100, 300)
+        verticalRangeSlider.frame = CGRectMake(300, horizontalLine.frame.origin.y - 290, 40, 270)
         verticalRangeSlider.action = "updateRange:"
         verticalRangeSlider.target = self
         
