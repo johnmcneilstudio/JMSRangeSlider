@@ -54,10 +54,12 @@ class ViewController: NSViewController {
         self.updateTextFields()
     }
     
-    
+    // @function        addHorizontalElements
+    // Add horizontal elements
+    //
     func addHorizontalElements() {
         // Text
-        txtHorizontal.frame = CGRectMake(20, self.view.frame.height - 90, 300, 70)
+        txtHorizontal.frame = CGRectMake(20, self.view.frame.height - 90, self.view.frame.width / 2 - marginElements, 70)
         txtHorizontal.bordered = false
         txtHorizontal.backgroundColor = nil
         txtHorizontal.selectable = false
@@ -87,7 +89,9 @@ class ViewController: NSViewController {
         self.view.addSubview(horizontalCellsSideBottom)
     }
     
-    
+    // @function        addVerticalElements
+    // Add vertical elements
+    //
     func addVerticalElements() {
         // Separator
         horizontalLine.frame = CGRectMake(marginElements, horizontalRangeSlider.frame.origin.y - marginElements, self.view.frame.width - 2 * marginElements, 2.0)
@@ -124,13 +128,17 @@ class ViewController: NSViewController {
         self.view.addSubview(verticalCellsSideRight)
     }
     
-    
+    // @function        updateTextFields
+    // Update text fields
+    //
     func updateTextFields() {
         txtHorizontal.stringValue = "Min: \(startMinValue) \nMax: \(startMaxValue) \nLower: \(horizontalRangeSlider.lowerValue) \nUpper: \(horizontalRangeSlider.upperValue)"
         txtVertical.stringValue = "Min: \(startMinValue) \nMax: \(startMaxValue) \nLower: \(verticalRangeSlider.lowerValue) \nUpper: \(verticalRangeSlider.upperValue)"
     }
     
-    
+    // @function        toggleCornerRadius
+    // Toggle Corner Radius
+    //
     func toggleCornerRadius(sender: AnyObject) {
         if sender as? NSButton == horizontalCornerRadius {
             horizontalRangeSlider.cornerRadius = horizontalCornerRadius.state == 1 ? 1.0: 0.0
@@ -139,6 +147,9 @@ class ViewController: NSViewController {
         }
     }
     
+    // @function        toggleHorizontalCellsSide
+    // Toggle horizontal range slider cells side
+    //
     func toggleHorizontalCellsSide(sender: AnyObject) {
         if sender as! NSButton == horizontalCellsSideTop {
             horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Top
@@ -147,6 +158,9 @@ class ViewController: NSViewController {
         }
     }
     
+    // @function        toggleVerticalCellsSide
+    // Toggle vertical range slider cells side
+    //
     func toggleVerticalCellsSide(sender: AnyObject) {
         if sender as! NSButton == verticalCellsSideLeft {
             verticalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Left
@@ -156,7 +170,9 @@ class ViewController: NSViewController {
     }
     
     
-    
+    // @function        addRangeSlider
+    // Add horizontal range slider
+    //
     func addRangeSlider() {
         let cellWidth: CGFloat = 20
         let cellHeight: CGFloat = 30
@@ -172,7 +188,7 @@ class ViewController: NSViewController {
         horizontalRangeSlider.lowerValue = startLowerValue
         horizontalRangeSlider.upperValue = startUpperValue
         horizontalRangeSlider.cornerRadius = CGFloat(horizontalCornerRadius.state)
-        horizontalRangeSlider.frame = CGRect(x: cellWidth, y: txtHorizontal.frame.origin.y - txtHorizontal.frame.height - marginElements, width: self.view.bounds.width - 2 * cellWidth, height: 2 * cellHeight + trackThickness)
+        horizontalRangeSlider.frame = CGRect(x: cellWidth, y: txtHorizontal.frame.origin.y - cellHeight - trackThickness - marginElements, width: self.view.bounds.width - 2 * cellWidth, height: cellHeight + trackThickness)
         horizontalRangeSlider.action = "updateRange:"
         horizontalRangeSlider.target = self
         
@@ -181,6 +197,9 @@ class ViewController: NSViewController {
     }
     
     
+    // @function        addVerticalRangeSlider
+    // Add vertical range slider
+    //
     func addVerticalRangeSlider() {
         let cellWidth: CGFloat = 30
         let cellHeight: CGFloat = 20
@@ -196,7 +215,7 @@ class ViewController: NSViewController {
         verticalRangeSlider.lowerValue = startLowerValue
         verticalRangeSlider.upperValue = startUpperValue
         verticalRangeSlider.cornerRadius = CGFloat(verticalCornerRadius.state)
-        verticalRangeSlider.frame = CGRectMake(self.view.frame.width / 2, horizontalLine.frame.origin.y - 190, 2 * cellWidth + trackThickness, 170)
+        verticalRangeSlider.frame = CGRectMake(self.view.frame.width / 2, horizontalLine.frame.origin.y - 190, cellWidth + trackThickness, 170)
         verticalRangeSlider.action = "updateRange:"
         verticalRangeSlider.target = self
         
@@ -205,6 +224,9 @@ class ViewController: NSViewController {
     }
 
     
+    // @function        updateRange
+    // Called on range slider update
+    //
     func updateRange(sender: AnyObject) {
         self.updateTextFields()
     }
