@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v2.0.1
+- Cleaned duplicated files
+
 ## v2.0.0
 - Added `direction` attribute to specify slider direction ( Horizontal / Vertical )  
 - Added `cellsSide` attribute to specify cells side ( Top / Bottom / Left / Right)  
