@@ -1,4 +1,4 @@
-# JMS Range Slider v2.0.1
+# JMS Range Slider v2.0.2
 
 > A custom Range Slider for OSX
 

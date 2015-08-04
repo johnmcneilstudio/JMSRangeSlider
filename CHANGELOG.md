@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v2.0.2
+- Fixed bug on slider's frame size depending on cells' side
+- Added gif screenshot in README
+- Added comments in code
+
 ## v2.0.1
 - Cleaned duplicated files
 
