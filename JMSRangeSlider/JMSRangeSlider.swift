@@ -27,8 +27,10 @@ public enum JMSRangeSliderCellsSide: Int {
 
 public class JMSRangeSlider: NSControl {
 
+    // Previous mouse location
     private var previousLocation: CGPoint = CGPoint()
     
+    // Private vars
     private let trackLayer: RangeSliderTrackLayer = RangeSliderTrackLayer()
     private let lowerCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
     private let upperCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
@@ -148,10 +150,13 @@ public class JMSRangeSlider: NSControl {
     // INIT
     
     public convenience init() {
+        
         self.init(frame: CGRectZero)
+        
     }
     
     public override init(frame: CGRect) {
+        
         super.init(frame: frame)
         
         self.wantsLayer = true
@@ -171,20 +176,34 @@ public class JMSRangeSlider: NSControl {
         layer?.addSublayer(upperCellLayer)
         
         updateLayerFrames()
+        
     }
     
     public required init?(coder: NSCoder) {
+        
         super.init(coder: coder)
+        
     }
     
     
+    //
     // OVERRIDE
+    //
     
+    // @function        drawRect
+    // Draw rect
+    //
     public override func drawRect(dirtyRect: NSRect) {
+        
         super.drawRect(dirtyRect)
+        
     }
     
+    // @function        mouseDown
+    // Called on mouse down
+    //
     public override func mouseDown(evt: NSEvent) {
+        
         let location = evt.locationInWindow
         previousLocation = convertPoint(location, fromView: nil)
         
@@ -193,10 +212,13 @@ public class JMSRangeSlider: NSControl {
         } else if upperCellLayer.frame.contains(previousLocation) {
             upperCellLayer.highlighted = true
         }
+        
     }
     
     
-    
+    // @function        mouseDragged
+    // Called on mouse dragged
+    //
     public override func mouseDragged(evt: NSEvent) {
         
         let location = evt.locationInWindow
@@ -226,22 +248,37 @@ public class JMSRangeSlider: NSControl {
         
     }
     
+    // @function        mouseUp
+    // Called on mouse up
+    //
     public override func mouseUp(evt: NSEvent) {
+        
+        // Cells not highlighted anymore
         lowerCellLayer.highlighted = false
         upperCellLayer.highlighted = false
+        
     }
     
-    // Is Vertical slider ?
+    // @function        isVertical
+    // Returns wether or not the slider is in vertical direction
+    //
     public func isVertical() -> Bool {
+        
         return self.direction == JMSRangeSliderDirection.Vertical
+        
     }
     
     
-    // PUBLIC
     
-    // @function    updateLayerFrames
+    //
+    // PUBLIC
+    //
+    
+    // @function        updateLayerFrames
+    // Updates layers frame
     //
     private func updateLayerFrames() {
+        
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
@@ -267,6 +304,7 @@ public class JMSRangeSlider: NSControl {
             lowerCellLayer.frame = CGRect(x: lowerCellCenter, y: self.trackThickness, width: cellWidth, height: cellHeight)
             upperCellLayer.frame = CGRect(x: upperCellCenter + cellWidth, y: self.trackThickness, width: cellWidth, height: cellHeight)
             
+            // If Cells on the bottom side
             if cellsSide == JMSRangeSliderCellsSide.Bottom {
                 trackLayer.frame.origin.y = self.frame.height - self.trackThickness
                 lowerCellLayer.frame.origin.y = trackLayer.frame.origin.y - cellHeight
@@ -274,31 +312,43 @@ public class JMSRangeSlider: NSControl {
             }
         }
         
+        // Force display of elements
         trackLayer.setNeedsDisplay()
         lowerCellLayer.setNeedsDisplay()
         upperCellLayer.setNeedsDisplay()
         
         CATransaction.commit()
+        
     }
     
     
+    //
     // INTERNAL
+    //
     
-    // @function    positionForValue
+    // @function        positionForValue
+    // Get frame position for slider value
     //
     internal func positionForValue(value: Double) -> Double {
+        
+        // If vertical slider
         if self.isVertical() {
             return Double(bounds.height - 2 * cellHeight) * (value - minValue) / (maxValue - minValue)
+        // If horizontal slider
         } else {
             return Double(bounds.width - 2 * cellWidth) * (value - minValue) / (maxValue - minValue)
         }
+        
     }
     
     
-    // @function    boundValue
+    // @function        boundValue
+    // Bounds value
     //
     internal func boundValue(value: Double, toLowerValue lowerValue: Double, upperValue: Double) -> Double {
+        
         return min(max(value, lowerValue), upperValue)
+        
     }
     
 }

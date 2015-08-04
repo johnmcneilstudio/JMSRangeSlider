@@ -63,8 +63,12 @@ extension NSBezierPath {
 
 class RangeSliderTrackLayer: CALayer {
 
+    // Range Slider weak var
     weak var rangeSlider: JMSRangeSlider?
     
+    // @function        drawInContext
+    // Draw in context
+    //
     override func drawInContext(ctx: CGContext) {
         if let slider = rangeSlider {
             // Clip

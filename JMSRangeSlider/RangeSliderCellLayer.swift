@@ -17,16 +17,22 @@ enum CellPosition: Int {
 
 class RangeSliderCellLayer: CALayer {
     
+    // Highlighted
     var highlighted: Bool = false {
         didSet {
             setNeedsDisplay()
         }
     }
     
+    // Cell Position
     var cellPosition: CellPosition?
     
+    // Range Slider weak var
     weak var rangeSlider: JMSRangeSlider?
     
+    // @function        drawInContext
+    // Draw in context
+    //
     override func drawInContext(ctx: CGContext) {
         if let slider = rangeSlider {
             
