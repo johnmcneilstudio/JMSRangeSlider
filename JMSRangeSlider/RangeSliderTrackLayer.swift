@@ -68,7 +68,7 @@ class RangeSliderTrackLayer: CALayer {
     override func drawInContext(ctx: CGContext) {
         if let slider = rangeSlider {
             // Clip
-            let cornerRadius = bounds.height * slider.cornerRadius / 2.0
+            let cornerRadius = (slider.isVertical() ? bounds.width : bounds.height) * slider.cornerRadius / 2.0
             let path = NSBezierPath(roundedRect: bounds, xRadius: cornerRadius, yRadius: cornerRadius)
             
             CGContextAddPath(ctx, path.CGPath)
@@ -81,7 +81,14 @@ class RangeSliderTrackLayer: CALayer {
             CGContextSetFillColorWithColor(ctx, slider.trackHighlightTintColor.CGColor)
             let lowerValuePosition = CGFloat(slider.positionForValue(slider.lowerValue))
             let upperValuePosition = CGFloat(slider.positionForValue(slider.upperValue))
-            let rect = CGRect(x: lowerValuePosition, y: 0.0, width: upperValuePosition - lowerValuePosition, height: bounds.height)
+            
+            // If slider is horizontal
+            var rect: CGRect = CGRectZero
+            if slider.isVertical() {
+                rect = CGRect(x: 0.0, y: lowerValuePosition, width: bounds.width, height: upperValuePosition - lowerValuePosition)
+            } else {
+                rect = CGRect(x: lowerValuePosition, y: 0.0, width: upperValuePosition - lowerValuePosition, height: bounds.height)
+            }
             
             let highlightPath = NSBezierPath(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
             CGContextAddPath(ctx, highlightPath.CGPath)

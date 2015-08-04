@@ -7,14 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		084FAA491B699F2D007C828D /* RangeSliderCellLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 084FAA481B699F2D007C828D /* RangeSliderCellLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		084FAA4B1B699F41007C828D /* RangeSliderTrackLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 084FAA4A1B699F41007C828D /* RangeSliderTrackLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		083B4A5E1B703CB900EA859B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 083B4A561B703CB900EA859B /* Info.plist */; };
+		083B4A611B703CB900EA859B /* JMSRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A581B703CB900EA859B /* JMSRangeSlider.swift */; };
+		083B4A641B703CB900EA859B /* RangeSliderCellLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A5A1B703CB900EA859B /* RangeSliderCellLayer.swift */; };
+		083B4A671B703CB900EA859B /* RangeSliderTrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A5C1B703CB900EA859B /* RangeSliderTrackLayer.swift */; };
+		083B4A681B703D1A00EA859B /* JMSRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A581B703CB900EA859B /* JMSRangeSlider.swift */; };
+		083B4A691B703D1A00EA859B /* RangeSliderCellLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A5A1B703CB900EA859B /* RangeSliderCellLayer.swift */; };
+		083B4A6A1B703D1A00EA859B /* RangeSliderTrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A5C1B703CB900EA859B /* RangeSliderTrackLayer.swift */; };
+		083B4A6E1B703D2C00EA859B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 083B4A561B703CB900EA859B /* Info.plist */; };
 		084FAA4C1B69A068007C828D /* JMSRangeSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A8732A1B6830D300123705 /* JMSRangeSlider.framework */; };
 		084FAA4E1B69A29F007C828D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 084FAA4D1B69A29F007C828D /* Cocoa.framework */; };
-		08A8732E1B6830D300123705 /* JMSRangeSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A8732D1B6830D300123705 /* JMSRangeSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		08A873381B6831FC00123705 /* JMSRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A873351B6831FC00123705 /* JMSRangeSlider.swift */; };
-		08A873391B6831FC00123705 /* RangeSliderCellLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A873361B6831FC00123705 /* RangeSliderCellLayer.swift */; };
-		08A8733A1B6831FC00123705 /* RangeSliderTrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A873371B6831FC00123705 /* RangeSliderTrackLayer.swift */; };
 		08A8734B1B68456300123705 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A8734A1B68456300123705 /* ViewController.swift */; };
 		08A8734D1B68456300123705 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08A8734C1B68456300123705 /* Assets.xcassets */; };
 		08A873501B68456300123705 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A8734E1B68456300123705 /* Main.storyboard */; };
@@ -22,15 +24,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		084FAA481B699F2D007C828D /* RangeSliderCellLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RangeSliderCellLayer.h; sourceTree = "<group>"; };
-		084FAA4A1B699F41007C828D /* RangeSliderTrackLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RangeSliderTrackLayer.h; sourceTree = "<group>"; };
+		083B4A561B703CB900EA859B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		083B4A581B703CB900EA859B /* JMSRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JMSRangeSlider.swift; sourceTree = "<group>"; };
+		083B4A5A1B703CB900EA859B /* RangeSliderCellLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderCellLayer.swift; sourceTree = "<group>"; };
+		083B4A5C1B703CB900EA859B /* RangeSliderTrackLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderTrackLayer.swift; sourceTree = "<group>"; };
 		084FAA4D1B69A29F007C828D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		08A8732A1B6830D300123705 /* JMSRangeSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JMSRangeSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		08A8732D1B6830D300123705 /* JMSRangeSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JMSRangeSlider.h; sourceTree = "<group>"; };
-		08A8732F1B6830D300123705 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		08A873351B6831FC00123705 /* JMSRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JMSRangeSlider.swift; sourceTree = "<group>"; };
-		08A873361B6831FC00123705 /* RangeSliderCellLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderCellLayer.swift; sourceTree = "<group>"; };
-		08A873371B6831FC00123705 /* RangeSliderTrackLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderTrackLayer.swift; sourceTree = "<group>"; };
 		08A873461B68456300123705 /* JMSRangeSlider-DEMO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JMSRangeSlider-DEMO.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		08A8734A1B68456300123705 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		08A8734C1B68456300123705 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,11 +58,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		083B4A551B703CB900EA859B /* JMSRangeSlider */ = {
+			isa = PBXGroup;
+			children = (
+				083B4A561B703CB900EA859B /* Info.plist */,
+				083B4A581B703CB900EA859B /* JMSRangeSlider.swift */,
+				083B4A5A1B703CB900EA859B /* RangeSliderCellLayer.swift */,
+				083B4A5C1B703CB900EA859B /* RangeSliderTrackLayer.swift */,
+			);
+			name = JMSRangeSlider;
+			path = ../JMSRangeSlider;
+			sourceTree = "<group>";
+		};
 		08A873201B6830D300123705 = {
 			isa = PBXGroup;
 			children = (
+				083B4A551B703CB900EA859B /* JMSRangeSlider */,
 				084FAA4D1B69A29F007C828D /* Cocoa.framework */,
-				08A8732C1B6830D300123705 /* JMSRangeSlider */,
 				08A873471B68456300123705 /* JMSRangeSlider-DEMO */,
 				08A8732B1B6830D300123705 /* Products */,
 			);
@@ -76,20 +87,6 @@
 				08A873461B68456300123705 /* JMSRangeSlider-DEMO.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		08A8732C1B6830D300123705 /* JMSRangeSlider */ = {
-			isa = PBXGroup;
-			children = (
-				08A8732D1B6830D300123705 /* JMSRangeSlider.h */,
-				08A873351B6831FC00123705 /* JMSRangeSlider.swift */,
-				084FAA481B699F2D007C828D /* RangeSliderCellLayer.h */,
-				08A873361B6831FC00123705 /* RangeSliderCellLayer.swift */,
-				084FAA4A1B699F41007C828D /* RangeSliderTrackLayer.h */,
-				08A873371B6831FC00123705 /* RangeSliderTrackLayer.swift */,
-				08A8732F1B6830D300123705 /* Info.plist */,
-			);
-			path = JMSRangeSlider;
 			sourceTree = "<group>";
 		};
 		08A873471B68456300123705 /* JMSRangeSlider-DEMO */ = {
@@ -111,9 +108,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				084FAA4B1B699F41007C828D /* RangeSliderTrackLayer.h in Headers */,
-				08A8732E1B6830D300123705 /* JMSRangeSlider.h in Headers */,
-				084FAA491B699F2D007C828D /* RangeSliderCellLayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +191,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				083B4A6E1B703D2C00EA859B /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +201,7 @@
 			files = (
 				08A8734D1B68456300123705 /* Assets.xcassets in Resources */,
 				08A873501B68456300123705 /* Main.storyboard in Resources */,
+				083B4A5E1B703CB900EA859B /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,9 +212,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08A873381B6831FC00123705 /* JMSRangeSlider.swift in Sources */,
-				08A873391B6831FC00123705 /* RangeSliderCellLayer.swift in Sources */,
-				08A8733A1B6831FC00123705 /* RangeSliderTrackLayer.swift in Sources */,
+				083B4A681B703D1A00EA859B /* JMSRangeSlider.swift in Sources */,
+				083B4A691B703D1A00EA859B /* RangeSliderCellLayer.swift in Sources */,
+				083B4A6A1B703D1A00EA859B /* RangeSliderTrackLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,7 +223,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				08A873561B6848D000123705 /* AppDelegate.swift in Sources */,
+				083B4A671B703CB900EA859B /* RangeSliderTrackLayer.swift in Sources */,
 				08A8734B1B68456300123705 /* ViewController.swift in Sources */,
+				083B4A641B703CB900EA859B /* RangeSliderCellLayer.swift in Sources */,
+				083B4A611B703CB900EA859B /* JMSRangeSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,7 +338,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = JMSRangeSlider/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/../JMSRangeSlider/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jms.JMSRangeSlider;
@@ -359,7 +358,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = JMSRangeSlider/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/../JMSRangeSlider/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jms.JMSRangeSlider;

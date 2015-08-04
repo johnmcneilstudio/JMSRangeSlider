@@ -166,7 +166,7 @@ class ViewController: NSViewController {
         horizontalRangeSlider.cellHeight = cellHeight
         horizontalRangeSlider.trackThickness = trackThickness
         horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Top
-        //horizontalRangeSlider.trackHighlightTintColor = NSColor(red: 0.4, green: 0.698, blue: 1.0, alpha: 1.0)
+        horizontalRangeSlider.trackHighlightTintColor = NSColor(red: 0.4, green: 0.698, blue: 1.0, alpha: 1.0)
         horizontalRangeSlider.minValue = startMinValue
         horizontalRangeSlider.maxValue = startMaxValue
         horizontalRangeSlider.lowerValue = startLowerValue
