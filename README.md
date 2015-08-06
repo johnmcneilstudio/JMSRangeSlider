@@ -2,7 +2,7 @@
 
 > A custom Range Slider for OSX
 
-![Screenshot JMSRangeSlider](screenshot.png)
+![Screenshot JMSRangeSlider](screenshot.gif)
 
 ## Requirements
 * OS 10.10+
