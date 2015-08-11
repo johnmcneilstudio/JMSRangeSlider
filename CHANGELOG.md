@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v2.0.3
+- Updated Podfile usage code
+
 ## v2.0.2
 - Fixed bug on slider's frame size depending on cells' side
 - Added gif screenshot in README
