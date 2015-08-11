@@ -1,4 +1,4 @@
-# JMS Range Slider v2.0.2
+# JMS Range Slider v2.0.3
 
 > A custom Range Slider for OSX
 
@@ -12,7 +12,10 @@
 #### CocoaPods
 Add the following line to your `Podfile`:  
 ```
-pod 'JMSRangeSlider'
+target 'MyApp' do
+  use_frameworks!
+  pod 'JMSRangeSlider'
+end
 ```
 
 #### Manual
