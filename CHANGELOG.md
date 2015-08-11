@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## v2.0.4
+- Improved doc
+
 ## v2.0.3
 - Updated Podfile usage code
 
