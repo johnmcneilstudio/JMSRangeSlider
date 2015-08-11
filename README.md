@@ -1,8 +1,11 @@
-# JMS Range Slider v2.0.3
+# JMS Range Slider v2.0.4
 
 > A custom Range Slider for OSX
 
 ![Screenshot JMSRangeSlider](screenshot.gif)
+
+JMSRangeSlider is a range slider for OSX, written in Swift 2 and built with Xcode 7.  
+You can define its minimum & maximum values, its lower & upper values, its direction (horizontal / vertical), the side of its cells (left / right / top / bottom of the track bar), the width & height of the cells, the tint & highlight colors of the track bar, the cells' colors and wether or not the cells and track bar have a corner radius.
 
 ## Requirements
 * OS 10.10+
