@@ -14,7 +14,6 @@
 		083B4A681B703D1A00EA859B /* JMSRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A581B703CB900EA859B /* JMSRangeSlider.swift */; };
 		083B4A691B703D1A00EA859B /* RangeSliderCellLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A5A1B703CB900EA859B /* RangeSliderCellLayer.swift */; };
 		083B4A6A1B703D1A00EA859B /* RangeSliderTrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A5C1B703CB900EA859B /* RangeSliderTrackLayer.swift */; };
-		083B4A6E1B703D2C00EA859B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 083B4A561B703CB900EA859B /* Info.plist */; };
 		084FAA4C1B69A068007C828D /* JMSRangeSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A8732A1B6830D300123705 /* JMSRangeSlider.framework */; };
 		084FAA4E1B69A29F007C828D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 084FAA4D1B69A29F007C828D /* Cocoa.framework */; };
 		08A8734B1B68456300123705 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A8734A1B68456300123705 /* ViewController.swift */; };
@@ -156,14 +155,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "JohnMcNeil Studio";
 				TargetAttributes = {
 					08A873291B6830D300123705 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0810;
 					};
 					08A873451B68456300123705 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -191,7 +192,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				083B4A6E1B703D2C00EA859B /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,8 +257,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -303,8 +305,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -323,6 +327,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -345,6 +350,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -364,6 +370,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jms.JMSRangeSlider;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -377,6 +384,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jms.JMSRangeSlider-DEMO";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -390,6 +398,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jms.JMSRangeSlider-DEMO";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

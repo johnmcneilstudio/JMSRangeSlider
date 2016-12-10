@@ -10,8 +10,8 @@ import Cocoa
 
 enum CellPosition: Int {
     
-    case Lower = 1
-    case Upper
+    case lower = 1
+    case upper
     
 }
 
@@ -33,7 +33,7 @@ class RangeSliderCellLayer: CALayer {
     // @function        drawInContext
     // Draw in context
     //
-    override func drawInContext(ctx: CGContext) {
+    override func draw(in ctx: CGContext) {
         if let slider = rangeSlider {
             
             var cellPoints = (begin: NSPoint(x: 0, y: 0), second: NSPoint(x: 0, y: 0), third: NSPoint(x: 0, y: 0), fourth: NSPoint(x: 0, y: 0))
@@ -44,52 +44,52 @@ class RangeSliderCellLayer: CALayer {
             switch slider.cellsSide {
                 
             // Slider Horizontal, cells on top
-            case .Top:
+            case .top:
                 cellPoints.begin = NSMakePoint(0, sliceCutHeight)
                 cellPoints.second = NSMakePoint(0, frame.height)
                 cellPoints.third = NSMakePoint(frame.width, frame.height)
                 cellPoints.fourth = NSMakePoint(frame.width, 0)
                 
-                if cellPosition == CellPosition.Upper {
+                if cellPosition == CellPosition.upper {
                     cellPoints.begin.y = 0.0
                     cellPoints.fourth.y = sliceCutHeight
                 }
                 break
                 
             // Slider Horizontal, cells on bottom
-            case .Bottom:
+            case .bottom:
                 cellPoints.begin = NSMakePoint(0, 0)
                 cellPoints.second = NSMakePoint(0, sliceCutHeight)
                 cellPoints.third = NSMakePoint(frame.width, frame.height)
                 cellPoints.fourth = NSMakePoint(frame.width, 0)
                 
-                if cellPosition == CellPosition.Upper {
+                if cellPosition == CellPosition.upper {
                     cellPoints.second.y = frame.height
                     cellPoints.third.y = sliceCutHeight
                 }
                 break
             
             // Slider vertical, cells on left
-            case .Left:
+            case .left:
                 cellPoints.begin = NSMakePoint(0, 0)
                 cellPoints.second = NSMakePoint(0, frame.height)
                 cellPoints.third = NSMakePoint(frame.width, frame.height)
                 cellPoints.fourth = NSMakePoint(sliceCutWidth, 0)
                 
-                if cellPosition == CellPosition.Upper {
+                if cellPosition == CellPosition.upper {
                     cellPoints.third.x = sliceCutWidth
                     cellPoints.fourth.x = frame.width
                 }
                 break
                 
             // Slider vertical, cells on right
-            case .Right:
+            case .right:
                 cellPoints.begin = NSMakePoint(sliceCutWidth, 0)
                 cellPoints.second = NSMakePoint(0, frame.height)
                 cellPoints.third = NSMakePoint(frame.width, frame.height)
                 cellPoints.fourth = NSMakePoint(frame.width, 0)
                 
-                if cellPosition == CellPosition.Upper {
+                if cellPosition == CellPosition.upper {
                     cellPoints.begin.x = 0
                     cellPoints.second.x = sliceCutWidth
                 }
@@ -98,29 +98,29 @@ class RangeSliderCellLayer: CALayer {
             }
             
             // First point
-            cellPath.moveToPoint(cellPoints.begin)
-            cellPath.lineToPoint(cellPoints.second)
-            cellPath.lineToPoint(cellPoints.third)
-            cellPath.lineToPoint(cellPoints.fourth)
-            cellPath.lineToPoint(cellPoints.begin)
+            cellPath.move(to: cellPoints.begin)
+            cellPath.line(to: cellPoints.second)
+            cellPath.line(to: cellPoints.third)
+            cellPath.line(to: cellPoints.fourth)
+            cellPath.line(to: cellPoints.begin)
             
             // Shadow
-            let shadowColor = NSColor.grayColor()
-            CGContextSetShadowWithColor(ctx, CGSize(width: 0.0, height: 1.0), 1.0, shadowColor.CGColor)
-            CGContextSetFillColorWithColor(ctx, slider.cellTintColor.CGColor)
-            CGContextAddPath(ctx, cellPath.CGPath)
-            CGContextFillPath(ctx)
+            let shadowColor = NSColor.gray
+            ctx.setShadow(offset: CGSize(width: 0.0, height: 1.0), blur: 1.0, color: shadowColor.cgColor)
+            ctx.setFillColor(slider.cellTintColor.cgColor)
+            ctx.addPath(cellPath.CGPath)
+            ctx.fillPath()
             
             // Outline
-            CGContextSetStrokeColorWithColor(ctx, shadowColor.CGColor)
-            CGContextSetLineWidth(ctx, 0.5)
-            CGContextAddPath(ctx, cellPath.CGPath)
-            CGContextStrokePath(ctx)
+            ctx.setStrokeColor(shadowColor.cgColor)
+            ctx.setLineWidth(0.5)
+            ctx.addPath(cellPath.CGPath)
+            ctx.strokePath()
             
             if highlighted {
-                CGContextSetFillColorWithColor(ctx, NSColor(white: 0.0, alpha: 0.1).CGColor)
-                CGContextAddPath(ctx, cellPath.CGPath)
-                CGContextFillPath(ctx)
+                ctx.setFillColor(NSColor(white: 0.0, alpha: 0.1).cgColor)
+                ctx.addPath(cellPath.CGPath)
+                ctx.fillPath()
             }
         }
     }
