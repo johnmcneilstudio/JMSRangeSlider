@@ -11,7 +11,7 @@ import Cocoa
 
 extension NSBezierPath {
     
-    var CGPath: CGPath {
+    internal var CGPath: CGPath {
         
         get {
             return self.transformToCGPath()

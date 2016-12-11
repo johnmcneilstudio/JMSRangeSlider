@@ -147,6 +147,20 @@ open class JMSRangeSlider: NSControl {
         }
     }
     
+    // Custom lower cell drawing
+    open var lowerCellDrawingFunction: ((_ frame: NSRect, _ context: CGContext) -> (Void))? {
+        didSet {
+            lowerCellLayer.setNeedsDisplay()
+        }
+    }
+    
+    // Custom upper cell drawing
+    open var upperCellDrawingFunction: ((_ frame: NSRect, _ context: CGContext) -> (Void))? {
+        didSet {
+            upperCellLayer.setNeedsDisplay()
+        }
+    }
+    
     
     // INIT
     
