@@ -157,9 +157,9 @@ class ViewController: NSViewController {
     //
     func toggleCornerRadius(_ sender: AnyObject) {
         if sender as? NSButton == horizontalCornerRadius {
-            horizontalRangeSlider.cornerRadius = horizontalCornerRadius.state == 1 ? 1.0: 0.0
+            horizontalRangeSlider.trackCornerRadius = horizontalCornerRadius.state == 1 ? 1.0: 0.0
         } else {
-            verticalRangeSlider.cornerRadius = verticalCornerRadius.state == 1 ? 1.0: 0.0
+            verticalRangeSlider.trackCornerRadius = verticalCornerRadius.state == 1 ? 1.0: 0.0
         }
     }
     
@@ -207,7 +207,7 @@ class ViewController: NSViewController {
         horizontalRangeSlider.maxValue = startMaxValue
         horizontalRangeSlider.lowerValue = startLowerValue
         horizontalRangeSlider.upperValue = startUpperValue
-        horizontalRangeSlider.cornerRadius = CGFloat(horizontalCornerRadius.state)
+        horizontalRangeSlider.trackCornerRadius = CGFloat(horizontalCornerRadius.state)
         horizontalRangeSlider.frame = CGRect(x: cellWidth, y: txtHorizontal.frame.origin.y - cellHeight - trackThickness - marginElements, width: self.view.bounds.width - 2 * cellWidth, height: cellHeight + trackThickness)
         horizontalRangeSlider.action = #selector(ViewController.updateRange(_:))
         horizontalRangeSlider.target = self
@@ -234,7 +234,7 @@ class ViewController: NSViewController {
         verticalRangeSlider.maxValue = startMaxValue
         verticalRangeSlider.lowerValue = startLowerValue
         verticalRangeSlider.upperValue = startUpperValue
-        verticalRangeSlider.cornerRadius = CGFloat(verticalCornerRadius.state)
+        verticalRangeSlider.trackCornerRadius = CGFloat(verticalCornerRadius.state)
         verticalRangeSlider.frame = CGRect(x: self.view.frame.width / 2, y: horizontalLine.frame.origin.y - 190, width: cellWidth + trackThickness, height: 170)
         verticalRangeSlider.action = #selector(ViewController.updateRange(_:))
         verticalRangeSlider.target = self
@@ -251,5 +251,35 @@ class ViewController: NSViewController {
         self.updateTextFields()
     }
 
+}
+
+// Note: For some reason, makeTouchBar() is not being called, but I don't have time to 
+// figure out why. This is exactly how I have it implemented in another app, so no idea.
+// But this is still good example code for implemenation in other apps.
+
+@available(OSX 10.12.1, *)
+fileprivate extension NSTouchBarItemIdentifier {
+    static var rangeSlider = NSTouchBarItemIdentifier("com.jms.JMSRangeSlider.rangeSlider")
+}
+
+@available(OSX 10.12.1, *)
+extension ViewController : NSTouchBarDelegate {
+    override func makeTouchBar() -> NSTouchBar? {
+        let touchBar = NSTouchBar()
+        touchBar.delegate = self
+        touchBar.defaultItemIdentifiers = [.rangeSlider]
+        return touchBar
+    }
+    
+    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
+        if identifier == .rangeSlider {
+            return JMSRangeSlider.touchBarItem(identifier: identifier, width: 260.0, target: self, action: #selector(touchBarRangeChanged(_:)))
+        }
+        return nil
+    }
+    
+    @objc fileprivate func touchBarRangeChanged(_ sender: JMSRangeSlider) {
+        Swift.print("TOUCH BAR lower: \(sender.lowerValue)  upper: \(sender.upperValue)")
+    }
 }
 

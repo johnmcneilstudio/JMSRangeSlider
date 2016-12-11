@@ -72,8 +72,7 @@ class RangeSliderTrackLayer: CALayer {
     override func draw(in ctx: CGContext) {
         if let slider = rangeSlider {
             // Clip
-            let cornerRadius = (slider.isVertical() ? bounds.width : bounds.height) * slider.cornerRadius / 2.0
-            let path = NSBezierPath(roundedRect: bounds, xRadius: cornerRadius, yRadius: cornerRadius)
+            let path = NSBezierPath(roundedRect: bounds, xRadius: slider.trackCornerRadius, yRadius: slider.trackCornerRadius)
             
             ctx.addPath(path.CGPath)
             
@@ -88,10 +87,12 @@ class RangeSliderTrackLayer: CALayer {
             
             // If slider is horizontal
             var rect: CGRect = CGRect.zero
-            if slider.isVertical() {
-                rect = CGRect(x: 0.0, y: lowerValuePosition, width: bounds.width, height: upperValuePosition - lowerValuePosition)
+            if slider.isVertical {
+                let y = slider.extendTrackToFrame ? lowerValuePosition + slider.cellHeight - 2.0 : lowerValuePosition
+                rect = CGRect(x: 0.0, y: y, width: bounds.width, height: upperValuePosition - lowerValuePosition)
             } else {
-                rect = CGRect(x: lowerValuePosition, y: 0.0, width: upperValuePosition - lowerValuePosition, height: bounds.height)
+                let x = slider.extendTrackToFrame ? lowerValuePosition + slider.cellWidth - 2.0 : lowerValuePosition
+                rect = CGRect(x: x, y: 0.0, width: upperValuePosition - lowerValuePosition, height: bounds.height)
             }
             
             let highlightCornerRadius = slider.cellsSide == .centerHoriz || slider.cellsSide == .centerVert ? 0.0 : cornerRadius
