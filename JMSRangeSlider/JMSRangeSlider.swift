@@ -263,6 +263,8 @@ open class JMSRangeSlider: NSControl {
         previousLocation = location
         
         // Update values
+        let oldLowerValue = lowerValue
+        let oldUpperValue = upperValue
         var newLowerValue = lowerValue
         var newUpperValue = upperValue
         if lowerCellLayer.highlighted {
@@ -279,7 +281,7 @@ open class JMSRangeSlider: NSControl {
             upperValue = newUpperValue
         }
         
-        if newLowerValue != lowerValue || newUpperValue != upperValue {
+        if oldLowerValue != lowerValue || oldUpperValue != upperValue {
             // Notify App
             NSApp.sendAction(self.action!, to: self.target, from: self)
         }
