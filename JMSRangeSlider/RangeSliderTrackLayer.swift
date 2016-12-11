@@ -94,7 +94,8 @@ class RangeSliderTrackLayer: CALayer {
                 rect = CGRect(x: lowerValuePosition, y: 0.0, width: upperValuePosition - lowerValuePosition, height: bounds.height)
             }
             
-            let highlightPath = NSBezierPath(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
+            let highlightCornerRadius = slider.cellsSide == .centerHoriz || slider.cellsSide == .centerVert ? 0.0 : cornerRadius
+            let highlightPath = NSBezierPath(roundedRect: rect, xRadius: highlightCornerRadius, yRadius: highlightCornerRadius)
             ctx.addPath(highlightPath.CGPath)
             ctx.fillPath()
         }

@@ -68,6 +68,14 @@ class RangeSliderCellLayer: CALayer {
                     cellPoints.third.y = sliceCutHeight
                 }
                 break
+                
+            // Slider Horizontal, cells in center
+            case .centerHoriz:
+                cellPoints.begin = NSMakePoint(0, 0)
+                cellPoints.second = NSMakePoint(0, frame.height)
+                cellPoints.third = NSMakePoint(frame.width, frame.height)
+                cellPoints.fourth = NSMakePoint(frame.width, 0)
+                break
             
             // Slider vertical, cells on left
             case .left:
@@ -93,6 +101,14 @@ class RangeSliderCellLayer: CALayer {
                     cellPoints.begin.x = 0
                     cellPoints.second.x = sliceCutWidth
                 }
+                break
+                
+            // Slider vertical, cells in center
+            case .centerVert:
+                cellPoints.begin = NSMakePoint(0, 0)
+                cellPoints.second = NSMakePoint(0, frame.height)
+                cellPoints.third = NSMakePoint(frame.width, frame.height)
+                cellPoints.fourth = NSMakePoint(frame.width, 0)
                 break
                 
             }

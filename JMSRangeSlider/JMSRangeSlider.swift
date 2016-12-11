@@ -22,7 +22,8 @@ public enum JMSRangeSliderCellsSide: Int {
     case bottom
     case left
     case right
-    
+    case centerVert
+    case centerHoriz
 }
 
 open class JMSRangeSlider: NSControl {
@@ -287,7 +288,7 @@ open class JMSRangeSlider: NSControl {
         
         // Is vertical ?
         if self.isVertical() {
-            trackLayer.frame = CGRect(x: self.frame.width - self.trackThickness, y: self.cellHeight, width: self.trackThickness, height: bounds.height - 2 * self.cellHeight)
+            trackLayer.frame = CGRect(x: self.frame.width - trackThickness, y: cellHeight, width: trackThickness, height: bounds.height - 2 * self.cellHeight)
             lowerCellLayer.frame = CGRect(x: trackLayer.frame.origin.x - cellWidth, y: lowerCellCenter, width: cellWidth, height: cellHeight)
             upperCellLayer.frame = CGRect(x: trackLayer.frame.origin.x - cellWidth, y: upperCellCenter + cellHeight, width: cellWidth, height: cellHeight)
             
@@ -296,19 +297,30 @@ open class JMSRangeSlider: NSControl {
                 trackLayer.frame.origin.x = 0.0
                 lowerCellLayer.frame.origin.x = trackLayer.frame.width
                 upperCellLayer.frame.origin.x = trackLayer.frame.width
+            // If Cells in the center
+            } else if cellsSide == JMSRangeSliderCellsSide.centerVert {
+                trackLayer.frame.origin.x = (self.frame.width / 2.0) - (trackThickness / 2.0)
+                lowerCellLayer.frame.origin.x = trackThickness / 2.0
+                upperCellLayer.frame.origin.x = trackThickness / 2.0
             }
-            
+        
         // Is Horizontal ?
         } else {
-            trackLayer.frame = CGRect(x: self.cellWidth, y: 0, width: bounds.width - 2 * cellWidth, height: self.trackThickness)
-            lowerCellLayer.frame = CGRect(x: lowerCellCenter, y: self.trackThickness, width: cellWidth, height: cellHeight)
-            upperCellLayer.frame = CGRect(x: upperCellCenter + cellWidth, y: self.trackThickness, width: cellWidth, height: cellHeight)
+            trackLayer.frame = CGRect(x: self.cellWidth, y: 0, width: bounds.width - 2 * cellWidth, height: trackThickness)
+            lowerCellLayer.frame = CGRect(x: lowerCellCenter, y: trackThickness, width: cellWidth, height: cellHeight)
+            upperCellLayer.frame = CGRect(x: upperCellCenter + cellWidth, y: trackThickness, width: cellWidth, height: cellHeight)
             
             // If Cells on the bottom side
             if cellsSide == JMSRangeSliderCellsSide.bottom {
-                trackLayer.frame.origin.y = self.frame.height - self.trackThickness
+                trackLayer.frame.origin.y = self.frame.height - trackThickness
                 lowerCellLayer.frame.origin.y = trackLayer.frame.origin.y - cellHeight
                 upperCellLayer.frame.origin.y = trackLayer.frame.origin.y - cellHeight
+            
+            // If Cells in the center
+            } else if cellsSide == JMSRangeSliderCellsSide.centerHoriz {
+                trackLayer.frame.origin.y = (self.frame.height / 2.0) - (trackThickness / 2.0)
+                lowerCellLayer.frame.origin.y = trackThickness / 2.0
+                upperCellLayer.frame.origin.y = trackThickness / 2.0
             }
         }
         

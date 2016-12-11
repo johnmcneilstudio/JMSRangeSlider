@@ -29,9 +29,11 @@ class ViewController: NSViewController {
     
     var horizontalCellsSideTop: NSButton = NSButton()
     var horizontalCellsSideBottom: NSButton = NSButton()
+    var horizontalCellsSideCenter: NSButton = NSButton()
     
     var verticalCellsSideLeft: NSButton = NSButton()
     var verticalCellsSideRight: NSButton = NSButton()
+    var verticalCellsSideCenter: NSButton = NSButton()
     
     let marginElements: CGFloat = 20
     
@@ -74,7 +76,7 @@ class ViewController: NSViewController {
         self.view.addSubview(horizontalCornerRadius)
         
         // Cells Side
-        horizontalCellsSideTop.frame = CGRect(x: self.view.frame.width / 2, y: horizontalCornerRadius.frame.origin.y - 2 * marginElements, width: 300, height: 30)
+        horizontalCellsSideTop.frame = CGRect(x: self.view.frame.width / 2, y: horizontalCornerRadius.frame.origin.y - marginElements, width: 300, height: 30)
         horizontalCellsSideTop.setButtonType(NSButtonType.radio)
         horizontalCellsSideTop.title = "Top"
         horizontalCellsSideTop.state = 1
@@ -87,6 +89,13 @@ class ViewController: NSViewController {
         horizontalCellsSideBottom.state = 0
         horizontalCellsSideBottom.action = #selector(ViewController.toggleHorizontalCellsSide(_:))
         self.view.addSubview(horizontalCellsSideBottom)
+        
+        horizontalCellsSideCenter.frame = CGRect(x: self.view.frame.width / 2, y: horizontalCellsSideBottom.frame.origin.y - marginElements, width: 300, height: 30)
+        horizontalCellsSideCenter.setButtonType(NSButtonType.radio)
+        horizontalCellsSideCenter.title = "Center"
+        horizontalCellsSideCenter.state = 0
+        horizontalCellsSideCenter.action = #selector(ViewController.toggleHorizontalCellsSide(_:))
+        self.view.addSubview(horizontalCellsSideCenter)
     }
     
     // @function        addVerticalElements
@@ -126,6 +135,13 @@ class ViewController: NSViewController {
         verticalCellsSideRight.state = 0
         verticalCellsSideRight.action = #selector(ViewController.toggleVerticalCellsSide(_:))
         self.view.addSubview(verticalCellsSideRight)
+        
+        verticalCellsSideCenter.frame = CGRect(x: marginElements, y: verticalCellsSideRight.frame.origin.y - marginElements, width: self.view.frame.width / 2, height: 30)
+        verticalCellsSideCenter.setButtonType(NSButtonType.radio)
+        verticalCellsSideCenter.title = "Center"
+        verticalCellsSideCenter.state = 0
+        verticalCellsSideCenter.action = #selector(ViewController.toggleVerticalCellsSide(_:))
+        self.view.addSubview(verticalCellsSideCenter)
     }
     
     // @function        updateTextFields
@@ -153,8 +169,10 @@ class ViewController: NSViewController {
     func toggleHorizontalCellsSide(_ sender: AnyObject) {
         if sender as! NSButton == horizontalCellsSideTop {
             horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.top
-        } else {
+        } else if sender as! NSButton == horizontalCellsSideBottom {
             horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.bottom
+        } else {
+            horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.centerHoriz
         }
     }
     
@@ -164,8 +182,10 @@ class ViewController: NSViewController {
     func toggleVerticalCellsSide(_ sender: AnyObject) {
         if sender as! NSButton == verticalCellsSideLeft {
             verticalRangeSlider.cellsSide = JMSRangeSliderCellsSide.left
-        } else {
+        } else if sender as! NSButton == verticalCellsSideRight {
             verticalRangeSlider.cellsSide = JMSRangeSliderCellsSide.right
+        } else {
+            verticalRangeSlider.cellsSide = JMSRangeSliderCellsSide.centerVert
         }
     }
     
