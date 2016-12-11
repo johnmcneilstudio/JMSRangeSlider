@@ -359,8 +359,8 @@ open class JMSRangeSlider: NSControl {
         
         // Is Horizontal ?
         } else {
-            let x = extendTrackToFrame ? 2.0 : cellWidth
-            let width = extendTrackToFrame ? bounds.width - 4.0 : bounds.width - (2.0 * cellWidth)
+            let x = extendTrackToFrame ? 1.0 : cellWidth
+            let width = extendTrackToFrame ? bounds.width - 2.0 : bounds.width - (2.0 * cellWidth)
             trackLayer.frame = CGRect(x: x, y: 0, width: width, height: trackThickness)
             lowerCellLayer.frame = CGRect(x: lowerCellCenter, y: trackThickness, width: cellWidth, height: cellHeight)
             upperCellLayer.frame = CGRect(x: upperCellCenter + cellWidth, y: trackThickness, width: cellWidth, height: cellHeight)
@@ -374,8 +374,8 @@ open class JMSRangeSlider: NSControl {
             // If Cells in the center
             } else if cellsSide == JMSRangeSliderCellsSide.centerHoriz {
                 trackLayer.frame.origin.y = (self.frame.height / 2.0) - (trackThickness / 2.0)
-                lowerCellLayer.frame.origin.y = trackThickness / 2.0
-                upperCellLayer.frame.origin.y = trackThickness / 2.0
+                lowerCellLayer.frame.origin.y = 0.0
+                upperCellLayer.frame.origin.y = 0.0
             }
         }
         
@@ -433,8 +433,8 @@ extension JMSRangeSlider {
         
         let rangeSlider = JMSRangeSlider()
         rangeSlider.translatesAutoresizingMaskIntoConstraints = false
-        rangeSlider.cellWidth = 32.5
-        rangeSlider.cellHeight = 32.5
+        rangeSlider.cellWidth = 32.0
+        rangeSlider.cellHeight = 30.0
         rangeSlider.trackThickness = 4.0
         
         rangeSlider.lowerCellDrawingFunction = drawScrubber
@@ -461,7 +461,7 @@ extension JMSRangeSlider {
         
         view.addSubview(rangeSlider)
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[rangeSlider(==\(width - 10.0))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["rangeSlider": rangeSlider]));
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[rangeSlider(==32.5)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["rangeSlider": rangeSlider]));
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[rangeSlider(==30.0)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["rangeSlider": rangeSlider]));
         view.addConstraint(NSLayoutConstraint(item: rangeSlider, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0.0));
         view.addConstraint(NSLayoutConstraint(item: rangeSlider, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0.0));
         
@@ -476,9 +476,22 @@ extension JMSRangeSlider {
         
         //// scrubberShadow Drawing
         context.saveGState()
-        context.setAlpha(0.2)
+        context.setAlpha(0.24)
         
-        let scrubberShadowPath = NSBezierPath(roundedRect: NSRect(x: 0, y: -0.5, width: frame.size.width, height: frame.size.height), xRadius: 7, yRadius: 7)
+        let scrubberShadowPath = NSBezierPath()
+        scrubberShadowPath.move(to: NSPoint(x: 3.39, y: 30))
+        scrubberShadowPath.curve(to: NSPoint(x: 28.61, y: 30), controlPoint1: NSPoint(x: 3.39, y: 30), controlPoint2: NSPoint(x: 28.61, y: 30))
+        scrubberShadowPath.curve(to: NSPoint(x: 32, y: 24), controlPoint1: NSPoint(x: 30.64, y: 28.78), controlPoint2: NSPoint(x: 32, y: 26.55))
+        scrubberShadowPath.line(to: NSPoint(x: 32, y: 6))
+        scrubberShadowPath.curve(to: NSPoint(x: 28.61, y: 0), controlPoint1: NSPoint(x: 32, y: 3.45), controlPoint2: NSPoint(x: 30.64, y: 1.22))
+        scrubberShadowPath.line(to: NSPoint(x: 3.39, y: 0))
+        scrubberShadowPath.curve(to: NSPoint(x: 2.31, y: 0.8), controlPoint1: NSPoint(x: 3.01, y: 0.23), controlPoint2: NSPoint(x: 2.64, y: 0.5))
+        scrubberShadowPath.curve(to: NSPoint(x: 0, y: 6), controlPoint1: NSPoint(x: 0.89, y: 2.08), controlPoint2: NSPoint(x: 0, y: 3.94))
+        scrubberShadowPath.line(to: NSPoint(x: 0, y: 24))
+        scrubberShadowPath.curve(to: NSPoint(x: 3.39, y: 30), controlPoint1: NSPoint(x: 0, y: 26.55), controlPoint2: NSPoint(x: 1.36, y: 28.78))
+        scrubberShadowPath.line(to: NSPoint(x: 3.39, y: 30))
+        scrubberShadowPath.close()
+        
         context.addPath(scrubberShadowPath.CGPath)
         context.setFillColor(NSColor.black.cgColor)
         context.fillPath()
@@ -486,7 +499,7 @@ extension JMSRangeSlider {
         context.restoreGState()
         
         //// scrubberShape Drawing
-        let scrubberShapePath = NSBezierPath(roundedRect: NSRect(x: 1, y: -0.5, width: frame.size.width - 2.0, height: frame.size.height - 2.0), xRadius: 6, yRadius: 6)
+        let scrubberShapePath = NSBezierPath(roundedRect: NSRect(x: 1, y: 0, width: 30, height: 30), xRadius: 6, yRadius: 6)
         context.addPath(scrubberShapePath.CGPath)
         context.setFillColor(NSColor.white.cgColor)
         context.fillPath()

@@ -82,8 +82,8 @@ class RangeSliderTrackLayer: CALayer {
             
             // Fill the highlighted range
             ctx.setFillColor(slider.trackHighlightTintColor.cgColor)
-            let lowerValuePosition = CGFloat(slider.positionForValue(slider.lowerValue))
-            let upperValuePosition = CGFloat(slider.positionForValue(slider.upperValue))
+            let lowerValuePosition = CGFloat(slider.positionForValue(slider.lowerValue) - (Double(slider.cellWidth)*0.5) + 1.0)
+            let upperValuePosition = CGFloat(slider.positionForValue(slider.upperValue) + (Double(slider.cellWidth)*0.5) + 1.0)
             
             // If slider is horizontal
             var rect: CGRect = CGRect.zero
