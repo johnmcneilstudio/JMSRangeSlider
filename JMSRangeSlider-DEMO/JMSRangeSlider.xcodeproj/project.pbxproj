@@ -8,19 +8,41 @@
 
 /* Begin PBXBuildFile section */
 		083B4A5E1B703CB900EA859B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 083B4A561B703CB900EA859B /* Info.plist */; };
-		083B4A611B703CB900EA859B /* JMSRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A581B703CB900EA859B /* JMSRangeSlider.swift */; };
-		083B4A641B703CB900EA859B /* RangeSliderCellLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A5A1B703CB900EA859B /* RangeSliderCellLayer.swift */; };
-		083B4A671B703CB900EA859B /* RangeSliderTrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A5C1B703CB900EA859B /* RangeSliderTrackLayer.swift */; };
 		083B4A681B703D1A00EA859B /* JMSRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A581B703CB900EA859B /* JMSRangeSlider.swift */; };
 		083B4A691B703D1A00EA859B /* RangeSliderCellLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A5A1B703CB900EA859B /* RangeSliderCellLayer.swift */; };
 		083B4A6A1B703D1A00EA859B /* RangeSliderTrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083B4A5C1B703CB900EA859B /* RangeSliderTrackLayer.swift */; };
-		084FAA4C1B69A068007C828D /* JMSRangeSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A8732A1B6830D300123705 /* JMSRangeSlider.framework */; };
 		084FAA4E1B69A29F007C828D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 084FAA4D1B69A29F007C828D /* Cocoa.framework */; };
 		08A8734B1B68456300123705 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A8734A1B68456300123705 /* ViewController.swift */; };
 		08A8734D1B68456300123705 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08A8734C1B68456300123705 /* Assets.xcassets */; };
 		08A873501B68456300123705 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08A8734E1B68456300123705 /* Main.storyboard */; };
 		08A873561B6848D000123705 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A873551B6848D000123705 /* AppDelegate.swift */; };
+		53560E771DFCDDC300547AF7 /* JMSRangeSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A8732A1B6830D300123705 /* JMSRangeSlider.framework */; };
+		53560E781DFCDDC300547AF7 /* JMSRangeSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08A8732A1B6830D300123705 /* JMSRangeSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		53560E791DFCDDC300547AF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 08A873211B6830D300123705 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 08A873291B6830D300123705;
+			remoteInfo = JMSRangeSlider;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		53560E7B1DFCDDC300547AF7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				53560E781DFCDDC300547AF7 /* JMSRangeSlider.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		083B4A561B703CB900EA859B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				084FAA4C1B69A068007C828D /* JMSRangeSlider.framework in Frameworks */,
+				53560E771DFCDDC300547AF7 /* JMSRangeSlider.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,10 +160,12 @@
 				08A873421B68456300123705 /* Sources */,
 				08A873431B68456300123705 /* Frameworks */,
 				08A873441B68456300123705 /* Resources */,
+				53560E7B1DFCDDC300547AF7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				53560E7A1DFCDDC300547AF7 /* PBXTargetDependency */,
 			);
 			name = "JMSRangeSlider-DEMO";
 			productName = "JMSRangeSlider-DEMO";
@@ -223,14 +247,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				08A873561B6848D000123705 /* AppDelegate.swift in Sources */,
-				083B4A671B703CB900EA859B /* RangeSliderTrackLayer.swift in Sources */,
 				08A8734B1B68456300123705 /* ViewController.swift in Sources */,
-				083B4A641B703CB900EA859B /* RangeSliderCellLayer.swift in Sources */,
-				083B4A611B703CB900EA859B /* JMSRangeSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		53560E7A1DFCDDC300547AF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 08A873291B6830D300123705 /* JMSRangeSlider */;
+			targetProxy = 53560E791DFCDDC300547AF7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		08A8734E1B68456300123705 /* Main.storyboard */ = {
@@ -337,6 +366,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -358,6 +388,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -377,6 +408,7 @@
 		08A873531B68456300123705 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -391,6 +423,7 @@
 		08A873541B68456300123705 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
