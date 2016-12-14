@@ -431,7 +431,7 @@ open class JMSRangeSlider: NSControl {
 extension JMSRangeSlider {
     
     // Creates a touch bar item that matches the style of the stock NSSliderTouchBarItem
-    public static func touchBarItem(identifier: NSTouchBarItemIdentifier, width: CGFloat = 260.0, target: AnyObject, action: Selector, minValue: Double = 0.0, maxValue: Double = 1.0, lowerValue: Double = 0.0, upperValue: Double = 1.0) -> NSCustomTouchBarItem {
+    public static func touchBarItem(identifier: NSTouchBarItemIdentifier, width: CGFloat = 260.0, target: AnyObject, action: Selector, minValue: Double = 0.0, maxValue: Double = 1.0, lowerValue: Double = 0.0, upperValue: Double = 1.0) -> (NSCustomTouchBarItem, JMSRangeSlider) {
         
         let rangeSlider = JMSRangeSlider()
         rangeSlider.translatesAutoresizingMaskIntoConstraints = false
@@ -469,7 +469,7 @@ extension JMSRangeSlider {
         
         let item = NSCustomTouchBarItem(identifier: identifier)
         item.view = view
-        return item
+        return (item, rangeSlider)
     }
     
     fileprivate static func drawScrubber(frame: NSRect, context: CGContext) {

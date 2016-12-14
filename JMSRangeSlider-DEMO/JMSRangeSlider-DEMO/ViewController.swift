@@ -273,7 +273,7 @@ extension ViewController : NSTouchBarDelegate {
     
     func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         if identifier == .rangeSlider {
-            return JMSRangeSlider.touchBarItem(identifier: identifier, width: 260.0, target: self, action: #selector(touchBarRangeChanged(_:)))
+            return JMSRangeSlider.touchBarItem(identifier: identifier, width: 260.0, target: self, action: #selector(touchBarRangeChanged(_:))).0
         }
         return nil
     }
