@@ -257,12 +257,12 @@ class ViewController: NSViewController {
 // figure out why. This is exactly how I have it implemented in another app, so no idea.
 // But this is still good example code for implemenation in other apps.
 
-@available(OSX 10.12.1, *)
+@available(OSX 10.12.2, *)
 fileprivate extension NSTouchBarItemIdentifier {
     static var rangeSlider = NSTouchBarItemIdentifier("com.jms.JMSRangeSlider.rangeSlider")
 }
 
-@available(OSX 10.12.1, *)
+@available(OSX 10.12.2, *)
 extension ViewController : NSTouchBarDelegate {
     override func makeTouchBar() -> NSTouchBar? {
         let touchBar = NSTouchBar()

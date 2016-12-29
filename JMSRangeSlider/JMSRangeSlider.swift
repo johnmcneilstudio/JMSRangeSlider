@@ -218,7 +218,7 @@ open class JMSRangeSlider: NSControl {
     //
     
     open override func touchesBegan(with event: NSEvent) {
-        if #available(OSX 10.12.1, *) {
+        if #available(OSX 10.12.2, *) {
             if let touch = event.touches(matching: .began, in: self).first {
                 interactionBegan(location: touch.location(in: self))
             }
@@ -241,7 +241,7 @@ open class JMSRangeSlider: NSControl {
     }
     
     open override func touchesMoved(with event: NSEvent) {
-        if #available(OSX 10.12.1, *) {
+        if #available(OSX 10.12.2, *) {
             if let touch = event.touches(matching: .moved, in: self).first {
                 interactionMoved(location: touch.location(in: self))
             }
@@ -288,13 +288,13 @@ open class JMSRangeSlider: NSControl {
     }
     
     open override func touchesEnded(with event: NSEvent) {
-        if #available(OSX 10.12.1, *) {
+        if #available(OSX 10.12.2, *) {
             interactionEnded()
         }
     }
     
     open override func touchesCancelled(with event: NSEvent) {
-        if #available(OSX 10.12.1, *) {
+        if #available(OSX 10.12.2, *) {
             interactionEnded()
         }
     }
@@ -427,7 +427,7 @@ open class JMSRangeSlider: NSControl {
 // NSTouchBar Style
 //
 
-@available(OSX 10.12.1, *)
+@available(OSX 10.12.2, *)
 extension JMSRangeSlider {
     
     // Creates a touch bar item that matches the style of the stock NSSliderTouchBarItem
