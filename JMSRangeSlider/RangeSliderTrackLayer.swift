@@ -11,7 +11,7 @@ import Cocoa
 
 extension NSBezierPath {
     
-    var CGPath: CGPathRef {
+    internal var CGPath: CGPath {
         
         get {
             return self.transformToCGPath()
@@ -21,11 +21,11 @@ extension NSBezierPath {
     /// Transforms the NSBezierPath into a CGPathRef
     ///
     /// :returns: The transformed NSBezierPath
-    private func transformToCGPath() -> CGPathRef {
+    fileprivate func transformToCGPath() -> CGPath {
         
         // Create path
-        let path = CGPathCreateMutable()
-        var points = UnsafeMutablePointer<NSPoint>.alloc(3)
+        let path = CGMutablePath()
+        let points = UnsafeMutablePointer<NSPoint>.allocate(capacity: 3)
         let numElements = self.elementCount
         
         if numElements > 0 {
@@ -34,28 +34,28 @@ extension NSBezierPath {
             
             for index in 0..<numElements {
                 
-                let pathType = self.elementAtIndex(index, associatedPoints: points)
+                let pathType = self.element(at: index, associatedPoints: points)
                 
                 switch pathType {
                     
-                case .MoveToBezierPathElement:
-                    CGPathMoveToPoint(path, nil, points[0].x, points[0].y)
-                case .LineToBezierPathElement:
-                    CGPathAddLineToPoint(path, nil, points[0].x, points[0].y)
+                case .moveToBezierPathElement:
+                    path.move(to: points[0])
+                case .lineToBezierPathElement:
+                    path.addLine(to: points[0])
                     didClosePath = false
-                case .CurveToBezierPathElement:
-                    CGPathAddCurveToPoint(path, nil, points[0].x, points[0].y, points[1].x, points[1].y, points[2].x, points[2].y)
+                case .curveToBezierPathElement:
+                    path.addCurve(to: points[2], control1: points[0], control2: points[1])
                     didClosePath = false
-                case .ClosePathBezierPathElement:
-                    CGPathCloseSubpath(path)
+                case .closePathBezierPathElement:
+                    path.closeSubpath()
                     didClosePath = true
                 }
             }
             
-            if !didClosePath { CGPathCloseSubpath(path) }
+            if !didClosePath { path.closeSubpath() }
         }
         
-        points.dealloc(3)
+        points.deallocate(capacity: 3)
         return path
     }
 }
@@ -69,34 +69,36 @@ class RangeSliderTrackLayer: CALayer {
     // @function        drawInContext
     // Draw in context
     //
-    override func drawInContext(ctx: CGContext) {
+    override func draw(in ctx: CGContext) {
         if let slider = rangeSlider {
             // Clip
-            let cornerRadius = (slider.isVertical() ? bounds.width : bounds.height) * slider.cornerRadius / 2.0
-            let path = NSBezierPath(roundedRect: bounds, xRadius: cornerRadius, yRadius: cornerRadius)
+            let path = NSBezierPath(roundedRect: bounds, xRadius: slider.trackCornerRadius, yRadius: slider.trackCornerRadius)
             
-            CGContextAddPath(ctx, path.CGPath)
+            ctx.addPath(path.CGPath)
             
             // Fill the track
-            CGContextSetFillColorWithColor(ctx, slider.trackTintColor.CGColor)
-            CGContextFillPath(ctx)
+            ctx.setFillColor(slider.trackTintColor.cgColor)
+            ctx.fillPath()
             
             // Fill the highlighted range
-            CGContextSetFillColorWithColor(ctx, slider.trackHighlightTintColor.CGColor)
-            let lowerValuePosition = CGFloat(slider.positionForValue(slider.lowerValue))
-            let upperValuePosition = CGFloat(slider.positionForValue(slider.upperValue))
+            ctx.setFillColor(slider.trackHighlightTintColor.cgColor)
+            let lowerValuePosition = CGFloat(slider.positionForValue(slider.lowerValue) - (Double(slider.cellWidth)*0.5) + 1.0)
+            let upperValuePosition = CGFloat(slider.positionForValue(slider.upperValue) + (Double(slider.cellWidth)*0.5) + 1.0)
             
             // If slider is horizontal
-            var rect: CGRect = CGRectZero
-            if slider.isVertical() {
-                rect = CGRect(x: 0.0, y: lowerValuePosition, width: bounds.width, height: upperValuePosition - lowerValuePosition)
+            var rect: CGRect = CGRect.zero
+            if slider.isVertical {
+                let y = slider.extendTrackToFrame ? lowerValuePosition + slider.cellHeight - 2.0 : lowerValuePosition
+                rect = CGRect(x: 0.0, y: y, width: bounds.width, height: upperValuePosition - lowerValuePosition)
             } else {
-                rect = CGRect(x: lowerValuePosition, y: 0.0, width: upperValuePosition - lowerValuePosition, height: bounds.height)
+                let x = slider.extendTrackToFrame ? lowerValuePosition + slider.cellWidth - 2.0 : lowerValuePosition
+                rect = CGRect(x: x, y: 0.0, width: upperValuePosition - lowerValuePosition, height: bounds.height)
             }
             
-            let highlightPath = NSBezierPath(roundedRect: rect, xRadius: cornerRadius, yRadius: cornerRadius)
-            CGContextAddPath(ctx, highlightPath.CGPath)
-            CGContextFillPath(ctx)
+            let highlightCornerRadius = slider.cellsSide == .centerHoriz || slider.cellsSide == .centerVert ? 0.0 : cornerRadius
+            let highlightPath = NSBezierPath(roundedRect: rect, xRadius: highlightCornerRadius, yRadius: highlightCornerRadius)
+            ctx.addPath(highlightPath.CGPath)
+            ctx.fillPath()
         }
     }
     

@@ -11,138 +11,165 @@ import QuartzCore
 
 public enum JMSRangeSliderDirection: Int {
     
-    case Horizontal = 1
-    case Vertical
+    case horizontal = 1
+    case vertical
     
 }
 
 public enum JMSRangeSliderCellsSide: Int {
     
-    case Top = 1
-    case Bottom
-    case Left
-    case Right
-    
+    case top = 1
+    case bottom
+    case left
+    case right
+    case centerVert
+    case centerHoriz
 }
 
-public class JMSRangeSlider: NSControl {
+open class JMSRangeSlider: NSControl {
 
     // Previous mouse location
-    private var previousLocation: CGPoint = CGPoint()
+    fileprivate var previousLocation: CGPoint = CGPoint()
     
     // Private vars
-    private let trackLayer: RangeSliderTrackLayer = RangeSliderTrackLayer()
-    private let lowerCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
-    private let upperCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
+    fileprivate let trackLayer: RangeSliderTrackLayer = RangeSliderTrackLayer()
+    fileprivate let lowerCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
+    fileprivate let upperCellLayer: RangeSliderCellLayer = RangeSliderCellLayer()
     
     // Slider Direction ( Horizontal / Vertical )
-    public var direction: JMSRangeSliderDirection = JMSRangeSliderDirection.Horizontal {
+    open var direction: JMSRangeSliderDirection = JMSRangeSliderDirection.horizontal {
         didSet {
             // Default values 
             // Left side when vertical position
             // Top side when horizontal position
-            if direction == JMSRangeSliderDirection.Vertical {
-                if cellsSide != JMSRangeSliderCellsSide.Left || cellsSide != JMSRangeSliderCellsSide.Right {
-                    cellsSide = JMSRangeSliderCellsSide.Left
+            if direction == JMSRangeSliderDirection.vertical {
+                if cellsSide != JMSRangeSliderCellsSide.left || cellsSide != JMSRangeSliderCellsSide.right {
+                    cellsSide = JMSRangeSliderCellsSide.left
                 }
             } else {
-                if cellsSide != JMSRangeSliderCellsSide.Top || cellsSide != JMSRangeSliderCellsSide.Bottom {
-                    cellsSide = JMSRangeSliderCellsSide.Top
+                if cellsSide != JMSRangeSliderCellsSide.top || cellsSide != JMSRangeSliderCellsSide.bottom {
+                    cellsSide = JMSRangeSliderCellsSide.top
                 }
             }
             updateLayerFrames()
         }
     }
     
+    // Returns wether or not the slider is in vertical direction
+    open var isVertical: Bool {
+        return self.direction == JMSRangeSliderDirection.vertical
+    }
+    
     // Cells side ( Top / Bottom / Left / Right )
-    public var cellsSide: JMSRangeSliderCellsSide = JMSRangeSliderCellsSide.Top {
+    open var cellsSide: JMSRangeSliderCellsSide = JMSRangeSliderCellsSide.top {
         didSet {
             updateLayerFrames()
         }
     }
     
     // Slider minimum value
-    public var minValue: Double = 0.0 {
+    open var minValue: Double = 0.0 {
         didSet {
             updateLayerFrames()
         }
     }
     
     // Slider maximum value
-    public var maxValue: Double = 1.0 {
+    open var maxValue: Double = 1.0 {
         didSet {
             updateLayerFrames()
         }
     }
     
     // Slider lower value
-    public var lowerValue: Double = 0.0 {
+    open var lowerValue: Double = 0.0 {
         didSet {
             updateLayerFrames()
         }
     }
     
     // Slider upper value
-    public var upperValue: Double = 1.0 {
+    open var upperValue: Double = 1.0 {
         didSet {
             updateLayerFrames()
         }
     }
     
     // Cell width
-    public var cellWidth: CGFloat = 20.0 {
+    open var cellWidth: CGFloat = 20.0 {
         didSet {
             updateLayerFrames()
         }
     }
     
     // Cell height
-    public var cellHeight: CGFloat = 20.0 {
+    open var cellHeight: CGFloat = 20.0 {
         didSet {
             updateLayerFrames()
         }
     }
     
     // Frame
-    public override var frame: CGRect {
+    open override var frame: CGRect {
         didSet {
             updateLayerFrames()
         }
     }
     
     // Track thickness
-    public var trackThickness: CGFloat = 10.0 {
+    open var trackThickness: CGFloat = 10.0 {
         didSet {
             updateLayerFrames()
         }
     }
     
     // Track tint color
-    public var trackTintColor: NSColor = NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0) {
+    open var trackTintColor: NSColor = NSColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0) {
         didSet {
             trackLayer.setNeedsDisplay()
         }
     }
 
     // Track highlight tint color
-    public var trackHighlightTintColor: NSColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0) {
+    open var trackHighlightTintColor: NSColor = NSColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0) {
+        didSet {
+            trackLayer.setNeedsDisplay()
+        }
+    }
+    
+    // Extends the track to the ends of the frame
+    open var extendTrackToFrame: Bool = false {
         didSet {
             trackLayer.setNeedsDisplay()
         }
     }
 
     // Cell tint color
-    public var cellTintColor: NSColor = NSColor.whiteColor() {
+    open var cellTintColor: NSColor = NSColor.white {
         didSet {
             lowerCellLayer.setNeedsDisplay()
             upperCellLayer.setNeedsDisplay()
         }
     }
 
-    // Corner radius
-    public var cornerRadius: CGFloat = 1.0 {
+    // Track corner radius
+    open var trackCornerRadius: CGFloat = 1.0 {
         didSet {
-            trackLayer.setNeedsDisplay()
+            updateLayerFrames()
+        }
+    }
+    
+    // Custom lower cell drawing
+    open var lowerCellDrawingFunction: ((_ frame: NSRect, _ context: CGContext) -> (Void))? {
+        didSet {
+            lowerCellLayer.setNeedsDisplay()
+        }
+    }
+    
+    // Custom upper cell drawing
+    open var upperCellDrawingFunction: ((_ frame: NSRect, _ context: CGContext) -> (Void))? {
+        didSet {
+            upperCellLayer.setNeedsDisplay()
         }
     }
     
@@ -151,7 +178,7 @@ public class JMSRangeSlider: NSControl {
     
     public convenience init() {
         
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
         
     }
     
@@ -162,17 +189,17 @@ public class JMSRangeSlider: NSControl {
         self.wantsLayer = true
         
         trackLayer.rangeSlider = self
-        trackLayer.contentsScale = (NSScreen.mainScreen()?.backingScaleFactor)!
+        trackLayer.contentsScale = (NSScreen.main()?.backingScaleFactor)!
         layer?.addSublayer(trackLayer)
         
         lowerCellLayer.rangeSlider = self
-        lowerCellLayer.cellPosition = CellPosition.Lower
-        lowerCellLayer.contentsScale = (NSScreen.mainScreen()?.backingScaleFactor)!
+        lowerCellLayer.cellPosition = CellPosition.lower
+        lowerCellLayer.contentsScale = (NSScreen.main()?.backingScaleFactor)!
         layer?.addSublayer(lowerCellLayer)
         
         upperCellLayer.rangeSlider = self
-        upperCellLayer.cellPosition = CellPosition.Upper
-        upperCellLayer.contentsScale = (NSScreen.mainScreen()?.backingScaleFactor)!
+        upperCellLayer.cellPosition = CellPosition.upper
+        upperCellLayer.contentsScale = (NSScreen.main()?.backingScaleFactor)!
         layer?.addSublayer(upperCellLayer)
         
         updateLayerFrames()
@@ -187,87 +214,114 @@ public class JMSRangeSlider: NSControl {
     
     
     //
-    // OVERRIDE
+    // USER INTERACTION
     //
     
-    // @function        drawRect
-    // Draw rect
-    //
-    public override func drawRect(dirtyRect: NSRect) {
-        
-        super.drawRect(dirtyRect)
-        
+    open override func touchesBegan(with event: NSEvent) {
+        if #available(OSX 10.12.2, *) {
+            if let touch = event.touches(matching: .began, in: self).first {
+                interactionBegan(location: touch.location(in: self))
+            }
+        }
     }
     
-    // @function        mouseDown
-    // Called on mouse down
-    //
-    public override func mouseDown(evt: NSEvent) {
-        
+    open override func mouseDown(with evt: NSEvent) {
         let location = evt.locationInWindow
-        previousLocation = convertPoint(location, fromView: nil)
+        interactionBegan(location: convert(location, from: nil))
+    }
+    
+    open func interactionBegan(location: NSPoint) {
+        previousLocation = location
         
         if lowerCellLayer.frame.contains(previousLocation) {
             lowerCellLayer.highlighted = true
         } else if upperCellLayer.frame.contains(previousLocation) {
             upperCellLayer.highlighted = true
         }
-        
     }
     
+    open override func touchesMoved(with event: NSEvent) {
+        if #available(OSX 10.12.2, *) {
+            if let touch = event.touches(matching: .moved, in: self).first {
+                interactionMoved(location: touch.location(in: self))
+            }
+        }
+    }
     
-    // @function        mouseDragged
-    // Called on mouse dragged
-    //
-    public override func mouseDragged(evt: NSEvent) {
-        
+    open override func mouseDragged(with evt: NSEvent) {
         let location = evt.locationInWindow
-        let pointInView = convertPoint(location, fromView: nil)
-
+        let pointInView = convert(location, from: nil)
+        interactionMoved(location: pointInView)
+    }
+    
+    open func interactionMoved(location: NSPoint) {
         // Get delta
-        let deltaLocation = self.isVertical() ? Double(pointInView.y - previousLocation.y) : Double(pointInView.x - previousLocation.x)
+        let deltaLocation = isVertical ? Double(location.y - previousLocation.y) : Double(location.x - previousLocation.x)
         
-        let deltaValue = (maxValue - minValue) * deltaLocation / (self.isVertical() ? Double(bounds.height - cellHeight) : Double(bounds.width - cellWidth))
+        let deltaValue = (maxValue - minValue) * deltaLocation / (isVertical ? Double(bounds.height - cellHeight) : Double(bounds.width - cellWidth))
         
-        previousLocation = pointInView
+        previousLocation = location
         
         // Update values
+        let oldLowerValue = lowerValue
+        let oldUpperValue = upperValue
+        var newLowerValue = lowerValue
+        var newUpperValue = upperValue
         if lowerCellLayer.highlighted {
-            lowerValue += deltaValue
-            lowerValue = boundValue(lowerValue, toLowerValue: minValue, upperValue: upperValue)
+            newLowerValue += deltaValue
+            newLowerValue = boundValue(newLowerValue, toLowerValue: minValue, upperValue: upperValue)
         } else if upperCellLayer.highlighted {
-            upperValue += deltaValue
-            upperValue = boundValue(upperValue, toLowerValue: lowerValue, upperValue: maxValue)
+            newUpperValue += deltaValue
+            newUpperValue = boundValue(newUpperValue, toLowerValue: lowerValue, upperValue: maxValue)
         }
         
-        // Update Layer
-        updateLayerFrames()
+        if newLowerValue != lowerValue {
+            lowerValue = newLowerValue
+        } else if newUpperValue != upperValue {
+            upperValue = newUpperValue
+        }
         
-        // Notify App
-        NSApp.sendAction(self.action, to: self.target, from: self)
-        
+        if oldLowerValue != lowerValue || oldUpperValue != upperValue {
+            // Notify App
+            NSApp.sendAction(self.action!, to: self.target, from: self)
+        }
     }
     
-    // @function        mouseUp
-    // Called on mouse up
-    //
-    public override func mouseUp(evt: NSEvent) {
-        
+    open override func touchesEnded(with event: NSEvent) {
+        if #available(OSX 10.12.2, *) {
+            interactionEnded()
+        }
+    }
+    
+    open override func touchesCancelled(with event: NSEvent) {
+        if #available(OSX 10.12.2, *) {
+            interactionEnded()
+        }
+    }
+    
+    open override func mouseUp(with evt: NSEvent) {
+        interactionEnded()
+    }
+    
+    open func interactionEnded() {
         // Cells not highlighted anymore
         lowerCellLayer.highlighted = false
         upperCellLayer.highlighted = false
-        
     }
     
-    // @function        isVertical
-    // Returns wether or not the slider is in vertical direction
+    
     //
-    public func isVertical() -> Bool {
+    // OVERRIDE
+    //
+    
+    // @function        drawRect
+    // Draw rect
+    //
+    open override func draw(_ dirtyRect: NSRect) {
         
-        return self.direction == JMSRangeSliderDirection.Vertical
+        super.draw(dirtyRect)
         
     }
-    
     
     
     //
@@ -277,7 +331,7 @@ public class JMSRangeSlider: NSControl {
     // @function        updateLayerFrames
     // Updates layers frame
     //
-    private func updateLayerFrames() {
+    fileprivate func updateLayerFrames() {
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
@@ -286,29 +340,44 @@ public class JMSRangeSlider: NSControl {
         let upperCellCenter = CGFloat(positionForValue(upperValue))
         
         // Is vertical ?
-        if self.isVertical() {
-            trackLayer.frame = CGRectMake(self.frame.width - self.trackThickness, self.cellHeight, self.trackThickness, bounds.height - 2 * self.cellHeight)
+        if isVertical {
+            let y = extendTrackToFrame ? 2.0 : cellHeight
+            let height = extendTrackToFrame ? bounds.height - 4.0 : bounds.height - (2.0 * self.cellHeight)
+            trackLayer.frame = CGRect(x: self.frame.width - trackThickness, y: y, width: trackThickness, height: height)
             lowerCellLayer.frame = CGRect(x: trackLayer.frame.origin.x - cellWidth, y: lowerCellCenter, width: cellWidth, height: cellHeight)
             upperCellLayer.frame = CGRect(x: trackLayer.frame.origin.x - cellWidth, y: upperCellCenter + cellHeight, width: cellWidth, height: cellHeight)
             
             // If Cells on the right side
-            if cellsSide == JMSRangeSliderCellsSide.Right {
+            if cellsSide == JMSRangeSliderCellsSide.right {
                 trackLayer.frame.origin.x = 0.0
                 lowerCellLayer.frame.origin.x = trackLayer.frame.width
                 upperCellLayer.frame.origin.x = trackLayer.frame.width
+            // If Cells in the center
+            } else if cellsSide == JMSRangeSliderCellsSide.centerVert {
+                trackLayer.frame.origin.x = (self.frame.width / 2.0) - (trackThickness / 2.0)
+                lowerCellLayer.frame.origin.x = trackThickness / 2.0
+                upperCellLayer.frame.origin.x = trackThickness / 2.0
             }
-            
+        
         // Is Horizontal ?
         } else {
-            trackLayer.frame = CGRectMake(self.cellWidth, 0, bounds.width - 2 * cellWidth, self.trackThickness)
-            lowerCellLayer.frame = CGRect(x: lowerCellCenter, y: self.trackThickness, width: cellWidth, height: cellHeight)
-            upperCellLayer.frame = CGRect(x: upperCellCenter + cellWidth, y: self.trackThickness, width: cellWidth, height: cellHeight)
+            let x = extendTrackToFrame ? 1.0 : cellWidth
+            let width = extendTrackToFrame ? bounds.width - 2.0 : bounds.width - (2.0 * cellWidth)
+            trackLayer.frame = CGRect(x: x, y: 0, width: width, height: trackThickness)
+            lowerCellLayer.frame = CGRect(x: lowerCellCenter, y: trackThickness, width: cellWidth, height: cellHeight)
+            upperCellLayer.frame = CGRect(x: upperCellCenter + cellWidth, y: trackThickness, width: cellWidth, height: cellHeight)
             
             // If Cells on the bottom side
-            if cellsSide == JMSRangeSliderCellsSide.Bottom {
-                trackLayer.frame.origin.y = self.frame.height - self.trackThickness
+            if cellsSide == JMSRangeSliderCellsSide.bottom {
+                trackLayer.frame.origin.y = self.frame.height - trackThickness
                 lowerCellLayer.frame.origin.y = trackLayer.frame.origin.y - cellHeight
                 upperCellLayer.frame.origin.y = trackLayer.frame.origin.y - cellHeight
+            
+            // If Cells in the center
+            } else if cellsSide == JMSRangeSliderCellsSide.centerHoriz {
+                trackLayer.frame.origin.y = (self.frame.height / 2.0) - (trackThickness / 2.0)
+                lowerCellLayer.frame.origin.y = 0.0
+                upperCellLayer.frame.origin.y = 0.0
             }
         }
         
@@ -329,10 +398,10 @@ public class JMSRangeSlider: NSControl {
     // @function        positionForValue
     // Get frame position for slider value
     //
-    internal func positionForValue(value: Double) -> Double {
+    internal func positionForValue(_ value: Double) -> Double {
         
         // If vertical slider
-        if self.isVertical() {
+        if isVertical {
             return Double(bounds.height - 2 * cellHeight) * (value - minValue) / (maxValue - minValue)
         // If horizontal slider
         } else {
@@ -345,10 +414,110 @@ public class JMSRangeSlider: NSControl {
     // @function        boundValue
     // Bounds value
     //
-    internal func boundValue(value: Double, toLowerValue lowerValue: Double, upperValue: Double) -> Double {
+    internal func boundValue(_ value: Double, toLowerValue lowerValue: Double, upperValue: Double) -> Double {
         
         return min(max(value, lowerValue), upperValue)
         
     }
     
 }
+
+
+//
+// NSTouchBar Style
+//
+
+@available(OSX 10.12.2, *)
+extension JMSRangeSlider {
+    
+    // Creates a touch bar item that matches the style of the stock NSSliderTouchBarItem
+    public static func touchBarItem(identifier: NSTouchBarItemIdentifier, width: CGFloat = 260.0, target: AnyObject, action: Selector, minValue: Double = 0.0, maxValue: Double = 1.0, lowerValue: Double = 0.0, upperValue: Double = 1.0) -> (NSCustomTouchBarItem, JMSRangeSlider) {
+        
+        let rangeSlider = JMSRangeSlider()
+        rangeSlider.translatesAutoresizingMaskIntoConstraints = false
+        rangeSlider.cellWidth = 32.0
+        rangeSlider.cellHeight = 30.0
+        rangeSlider.trackThickness = 4.0
+        
+        rangeSlider.lowerCellDrawingFunction = drawScrubber
+        rangeSlider.upperCellDrawingFunction = drawScrubber
+        rangeSlider.trackTintColor = NSColor(deviceWhite: 115.0 / 255.0, alpha: 1.0)
+        rangeSlider.trackHighlightTintColor = NSColor(deviceRed: 0.0, green: 130.0 / 255.0, blue: 215.0 / 255.0, alpha: 1.0)
+        rangeSlider.cellsSide = JMSRangeSliderCellsSide.centerHoriz
+        rangeSlider.trackCornerRadius = 2.0
+        rangeSlider.extendTrackToFrame = true
+        
+        rangeSlider.minValue = minValue
+        rangeSlider.maxValue = maxValue
+        rangeSlider.lowerValue = lowerValue
+        rangeSlider.upperValue = upperValue
+        
+        rangeSlider.target = target
+        rangeSlider.action = action
+        
+        let view = TouchBarBackgroundView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.wantsLayer = true
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[view(==\(width))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view": view]));
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[view(==30.0)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["view": view]));
+        
+        view.addSubview(rangeSlider)
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[rangeSlider(==\(width - 10.0))]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["rangeSlider": rangeSlider]));
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[rangeSlider(==30.0)]", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["rangeSlider": rangeSlider]));
+        view.addConstraint(NSLayoutConstraint(item: rangeSlider, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerX, multiplier: 1.0, constant: 0.0));
+        view.addConstraint(NSLayoutConstraint(item: rangeSlider, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: view, attribute: NSLayoutAttribute.centerY, multiplier: 1.0, constant: 0.0));
+        
+        let item = NSCustomTouchBarItem(identifier: identifier)
+        item.view = view
+        return (item, rangeSlider)
+    }
+    
+    fileprivate static func drawScrubber(frame: NSRect, context: CGContext) {
+        //// Resize to Target Frame
+        context.saveGState()
+        
+        //// scrubberShadow Drawing
+        context.saveGState()
+        context.setAlpha(0.24)
+        
+        let scrubberShadowPath = NSBezierPath()
+        scrubberShadowPath.move(to: NSPoint(x: 3.39, y: 30))
+        scrubberShadowPath.curve(to: NSPoint(x: 28.61, y: 30), controlPoint1: NSPoint(x: 3.39, y: 30), controlPoint2: NSPoint(x: 28.61, y: 30))
+        scrubberShadowPath.curve(to: NSPoint(x: 32, y: 24), controlPoint1: NSPoint(x: 30.64, y: 28.78), controlPoint2: NSPoint(x: 32, y: 26.55))
+        scrubberShadowPath.line(to: NSPoint(x: 32, y: 6))
+        scrubberShadowPath.curve(to: NSPoint(x: 28.61, y: 0), controlPoint1: NSPoint(x: 32, y: 3.45), controlPoint2: NSPoint(x: 30.64, y: 1.22))
+        scrubberShadowPath.line(to: NSPoint(x: 3.39, y: 0))
+        scrubberShadowPath.curve(to: NSPoint(x: 2.31, y: 0.8), controlPoint1: NSPoint(x: 3.01, y: 0.23), controlPoint2: NSPoint(x: 2.64, y: 0.5))
+        scrubberShadowPath.curve(to: NSPoint(x: 0, y: 6), controlPoint1: NSPoint(x: 0.89, y: 2.08), controlPoint2: NSPoint(x: 0, y: 3.94))
+        scrubberShadowPath.line(to: NSPoint(x: 0, y: 24))
+        scrubberShadowPath.curve(to: NSPoint(x: 3.39, y: 30), controlPoint1: NSPoint(x: 0, y: 26.55), controlPoint2: NSPoint(x: 1.36, y: 28.78))
+        scrubberShadowPath.line(to: NSPoint(x: 3.39, y: 30))
+        scrubberShadowPath.close()
+        
+        context.addPath(scrubberShadowPath.CGPath)
+        context.setFillColor(NSColor.black.cgColor)
+        context.fillPath()
+        
+        context.restoreGState()
+        
+        //// scrubberShape Drawing
+        let scrubberShapePath = NSBezierPath(roundedRect: NSRect(x: 1, y: 0, width: 30, height: 30), xRadius: 6, yRadius: 6)
+        context.addPath(scrubberShapePath.CGPath)
+        context.setFillColor(NSColor.white.cgColor)
+        context.fillPath()
+        
+        context.restoreGState()
+    }
+    
+    // Using an NSBezierPath for the background because CALayer cornerRadius draws slightly differently
+    // and it doesn't exactly match the stock control
+    fileprivate class TouchBarBackgroundView: NSView {
+        fileprivate override func draw(_ dirtyRect: NSRect) {
+            let backgroundColor = NSColor(deviceWhite: 54.0 / 255.0, alpha: 1.0)
+            let path = NSBezierPath(roundedRect: self.bounds, xRadius: 6, yRadius: 6)
+            backgroundColor.setFill()
+            path.fill()
+        }
+    }
+}
+

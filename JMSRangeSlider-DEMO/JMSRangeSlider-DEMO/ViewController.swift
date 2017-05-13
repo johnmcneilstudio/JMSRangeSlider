@@ -11,8 +11,8 @@ import JMSRangeSlider
 
 class ViewController: NSViewController {
 
-    let horizontalRangeSlider: JMSRangeSlider = JMSRangeSlider(frame: CGRectZero)
-    let verticalRangeSlider: JMSRangeSlider = JMSRangeSlider(frame: CGRectZero)
+    let horizontalRangeSlider: JMSRangeSlider = JMSRangeSlider(frame: CGRect.zero)
+    let verticalRangeSlider: JMSRangeSlider = JMSRangeSlider(frame: CGRect.zero)
     
     let horizontalLine: NSBox = NSBox()
     
@@ -29,9 +29,11 @@ class ViewController: NSViewController {
     
     var horizontalCellsSideTop: NSButton = NSButton()
     var horizontalCellsSideBottom: NSButton = NSButton()
+    var horizontalCellsSideCenter: NSButton = NSButton()
     
     var verticalCellsSideLeft: NSButton = NSButton()
     var verticalCellsSideRight: NSButton = NSButton()
+    var verticalCellsSideCenter: NSButton = NSButton()
     
     let marginElements: CGFloat = 20
     
@@ -59,34 +61,41 @@ class ViewController: NSViewController {
     //
     func addHorizontalElements() {
         // Text
-        txtHorizontal.frame = CGRectMake(20, self.view.frame.height - 90, self.view.frame.width / 2 - marginElements, 70)
-        txtHorizontal.bordered = false
+        txtHorizontal.frame = CGRect(x: 20, y: self.view.frame.height - 90, width: self.view.frame.width / 2 - marginElements, height: 70)
+        txtHorizontal.isBordered = false
         txtHorizontal.backgroundColor = nil
-        txtHorizontal.selectable = false
+        txtHorizontal.isSelectable = false
         self.view.addSubview(txtHorizontal)
         
         // Corner Radius
-        horizontalCornerRadius.frame = CGRectMake(self.view.frame.width / 2, self.view.frame.height - 40, 300, 30)
-        horizontalCornerRadius.setButtonType(NSButtonType.SwitchButton)
+        horizontalCornerRadius.frame = CGRect(x: self.view.frame.width / 2, y: self.view.frame.height - 40, width: 300, height: 30)
+        horizontalCornerRadius.setButtonType(NSButtonType.switch)
         horizontalCornerRadius.title = "Corner Radius ?"
         horizontalCornerRadius.state = 0
-        horizontalCornerRadius.action = "toggleCornerRadius:"
+        horizontalCornerRadius.action = #selector(ViewController.toggleCornerRadius(_:))
         self.view.addSubview(horizontalCornerRadius)
         
         // Cells Side
-        horizontalCellsSideTop.frame = CGRectMake(self.view.frame.width / 2, horizontalCornerRadius.frame.origin.y - 2 * marginElements, 300, 30)
-        horizontalCellsSideTop.setButtonType(NSButtonType.RadioButton)
+        horizontalCellsSideTop.frame = CGRect(x: self.view.frame.width / 2, y: horizontalCornerRadius.frame.origin.y - marginElements, width: 300, height: 30)
+        horizontalCellsSideTop.setButtonType(NSButtonType.radio)
         horizontalCellsSideTop.title = "Top"
         horizontalCellsSideTop.state = 1
-        horizontalCellsSideTop.action = "toggleHorizontalCellsSide:"
+        horizontalCellsSideTop.action = #selector(ViewController.toggleHorizontalCellsSide(_:))
         self.view.addSubview(horizontalCellsSideTop)
         
-        horizontalCellsSideBottom.frame = CGRectMake(self.view.frame.width / 2, horizontalCellsSideTop.frame.origin.y - marginElements, 300, 30)
-        horizontalCellsSideBottom.setButtonType(NSButtonType.RadioButton)
+        horizontalCellsSideBottom.frame = CGRect(x: self.view.frame.width / 2, y: horizontalCellsSideTop.frame.origin.y - marginElements, width: 300, height: 30)
+        horizontalCellsSideBottom.setButtonType(NSButtonType.radio)
         horizontalCellsSideBottom.title = "Bottom"
         horizontalCellsSideBottom.state = 0
-        horizontalCellsSideBottom.action = "toggleHorizontalCellsSide:"
+        horizontalCellsSideBottom.action = #selector(ViewController.toggleHorizontalCellsSide(_:))
         self.view.addSubview(horizontalCellsSideBottom)
+        
+        horizontalCellsSideCenter.frame = CGRect(x: self.view.frame.width / 2, y: horizontalCellsSideBottom.frame.origin.y - marginElements, width: 300, height: 30)
+        horizontalCellsSideCenter.setButtonType(NSButtonType.radio)
+        horizontalCellsSideCenter.title = "Center"
+        horizontalCellsSideCenter.state = 0
+        horizontalCellsSideCenter.action = #selector(ViewController.toggleHorizontalCellsSide(_:))
+        self.view.addSubview(horizontalCellsSideCenter)
     }
     
     // @function        addVerticalElements
@@ -94,38 +103,45 @@ class ViewController: NSViewController {
     //
     func addVerticalElements() {
         // Separator
-        horizontalLine.frame = CGRectMake(marginElements, horizontalRangeSlider.frame.origin.y - marginElements, self.view.frame.width - 2 * marginElements, 2.0)
+        horizontalLine.frame = CGRect(x: marginElements, y: horizontalRangeSlider.frame.origin.y - marginElements, width: self.view.frame.width - 2 * marginElements, height: 2.0)
         self.view.addSubview(horizontalLine)
         
         // Text
-        txtVertical.frame = CGRectMake(marginElements, horizontalLine.frame.origin.y - 80 - marginElements, self.view.frame.width / 2, 80)
-        txtVertical.bordered = false
+        txtVertical.frame = CGRect(x: marginElements, y: horizontalLine.frame.origin.y - 80 - marginElements, width: self.view.frame.width / 2, height: 80)
+        txtVertical.isBordered = false
         txtVertical.backgroundColor = nil
-        txtVertical.selectable = false
+        txtVertical.isSelectable = false
         self.view.addSubview(txtVertical)
         
         // Corner Radius
-        verticalCornerRadius.frame = CGRectMake(marginElements, txtVertical.frame.origin.y - 2 * marginElements, self.view.frame.width / 2, 30)
-        verticalCornerRadius.setButtonType(NSButtonType.SwitchButton)
+        verticalCornerRadius.frame = CGRect(x: marginElements, y: txtVertical.frame.origin.y - 2 * marginElements, width: self.view.frame.width / 2, height: 30)
+        verticalCornerRadius.setButtonType(NSButtonType.switch)
         verticalCornerRadius.title = "Corner Radius ?"
         verticalCornerRadius.state = 0
-        verticalCornerRadius.action = "toggleCornerRadius:"
+        verticalCornerRadius.action = #selector(ViewController.toggleCornerRadius(_:))
         self.view.addSubview(verticalCornerRadius)
         
         // Cells Side
-        verticalCellsSideLeft.frame = CGRectMake(marginElements, verticalCornerRadius.frame.origin.y - 2 * marginElements, self.view.frame.width / 2, 30)
-        verticalCellsSideLeft.setButtonType(NSButtonType.RadioButton)
+        verticalCellsSideLeft.frame = CGRect(x: marginElements, y: verticalCornerRadius.frame.origin.y - 2 * marginElements, width: self.view.frame.width / 2, height: 30)
+        verticalCellsSideLeft.setButtonType(NSButtonType.radio)
         verticalCellsSideLeft.title = "Left"
         verticalCellsSideLeft.state = 1
-        verticalCellsSideLeft.action = "toggleVerticalCellsSide:"
+        verticalCellsSideLeft.action = #selector(ViewController.toggleVerticalCellsSide(_:))
         self.view.addSubview(verticalCellsSideLeft)
         
-        verticalCellsSideRight.frame = CGRectMake(marginElements, verticalCellsSideLeft.frame.origin.y - marginElements, self.view.frame.width / 2, 30)
-        verticalCellsSideRight.setButtonType(NSButtonType.RadioButton)
+        verticalCellsSideRight.frame = CGRect(x: marginElements, y: verticalCellsSideLeft.frame.origin.y - marginElements, width: self.view.frame.width / 2, height: 30)
+        verticalCellsSideRight.setButtonType(NSButtonType.radio)
         verticalCellsSideRight.title = "Right"
         verticalCellsSideRight.state = 0
-        verticalCellsSideRight.action = "toggleVerticalCellsSide:"
+        verticalCellsSideRight.action = #selector(ViewController.toggleVerticalCellsSide(_:))
         self.view.addSubview(verticalCellsSideRight)
+        
+        verticalCellsSideCenter.frame = CGRect(x: marginElements, y: verticalCellsSideRight.frame.origin.y - marginElements, width: self.view.frame.width / 2, height: 30)
+        verticalCellsSideCenter.setButtonType(NSButtonType.radio)
+        verticalCellsSideCenter.title = "Center"
+        verticalCellsSideCenter.state = 0
+        verticalCellsSideCenter.action = #selector(ViewController.toggleVerticalCellsSide(_:))
+        self.view.addSubview(verticalCellsSideCenter)
     }
     
     // @function        updateTextFields
@@ -139,33 +155,37 @@ class ViewController: NSViewController {
     // @function        toggleCornerRadius
     // Toggle Corner Radius
     //
-    func toggleCornerRadius(sender: AnyObject) {
+    func toggleCornerRadius(_ sender: AnyObject) {
         if sender as? NSButton == horizontalCornerRadius {
-            horizontalRangeSlider.cornerRadius = horizontalCornerRadius.state == 1 ? 1.0: 0.0
+            horizontalRangeSlider.trackCornerRadius = horizontalCornerRadius.state == 1 ? 1.0: 0.0
         } else {
-            verticalRangeSlider.cornerRadius = verticalCornerRadius.state == 1 ? 1.0: 0.0
+            verticalRangeSlider.trackCornerRadius = verticalCornerRadius.state == 1 ? 1.0: 0.0
         }
     }
     
     // @function        toggleHorizontalCellsSide
     // Toggle horizontal range slider cells side
     //
-    func toggleHorizontalCellsSide(sender: AnyObject) {
+    func toggleHorizontalCellsSide(_ sender: AnyObject) {
         if sender as! NSButton == horizontalCellsSideTop {
-            horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Top
+            horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.top
+        } else if sender as! NSButton == horizontalCellsSideBottom {
+            horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.bottom
         } else {
-            horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Bottom
+            horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.centerHoriz
         }
     }
     
     // @function        toggleVerticalCellsSide
     // Toggle vertical range slider cells side
     //
-    func toggleVerticalCellsSide(sender: AnyObject) {
+    func toggleVerticalCellsSide(_ sender: AnyObject) {
         if sender as! NSButton == verticalCellsSideLeft {
-            verticalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Left
+            verticalRangeSlider.cellsSide = JMSRangeSliderCellsSide.left
+        } else if sender as! NSButton == verticalCellsSideRight {
+            verticalRangeSlider.cellsSide = JMSRangeSliderCellsSide.right
         } else {
-            verticalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Right
+            verticalRangeSlider.cellsSide = JMSRangeSliderCellsSide.centerVert
         }
     }
     
@@ -181,15 +201,15 @@ class ViewController: NSViewController {
         horizontalRangeSlider.cellWidth = cellWidth
         horizontalRangeSlider.cellHeight = cellHeight
         horizontalRangeSlider.trackThickness = trackThickness
-        horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.Top
+        horizontalRangeSlider.cellsSide = JMSRangeSliderCellsSide.top
         horizontalRangeSlider.trackHighlightTintColor = NSColor(red: 0.4, green: 0.698, blue: 1.0, alpha: 1.0)
         horizontalRangeSlider.minValue = startMinValue
         horizontalRangeSlider.maxValue = startMaxValue
         horizontalRangeSlider.lowerValue = startLowerValue
         horizontalRangeSlider.upperValue = startUpperValue
-        horizontalRangeSlider.cornerRadius = CGFloat(horizontalCornerRadius.state)
+        horizontalRangeSlider.trackCornerRadius = CGFloat(horizontalCornerRadius.state)
         horizontalRangeSlider.frame = CGRect(x: cellWidth, y: txtHorizontal.frame.origin.y - cellHeight - trackThickness - marginElements, width: self.view.bounds.width - 2 * cellWidth, height: cellHeight + trackThickness)
-        horizontalRangeSlider.action = "updateRange:"
+        horizontalRangeSlider.action = #selector(ViewController.updateRange(_:))
         horizontalRangeSlider.target = self
         
         self.view.addSubview(horizontalRangeSlider)
@@ -208,15 +228,15 @@ class ViewController: NSViewController {
         verticalRangeSlider.cellWidth = cellWidth
         verticalRangeSlider.cellHeight = cellHeight
         verticalRangeSlider.trackThickness = trackThickness
-        verticalRangeSlider.direction = JMSRangeSliderDirection.Vertical
+        verticalRangeSlider.direction = JMSRangeSliderDirection.vertical
         verticalRangeSlider.trackHighlightTintColor = NSColor(red: 1, green: 0.48, blue: 0.4, alpha: 1.0)
         verticalRangeSlider.minValue = startMinValue
         verticalRangeSlider.maxValue = startMaxValue
         verticalRangeSlider.lowerValue = startLowerValue
         verticalRangeSlider.upperValue = startUpperValue
-        verticalRangeSlider.cornerRadius = CGFloat(verticalCornerRadius.state)
-        verticalRangeSlider.frame = CGRectMake(self.view.frame.width / 2, horizontalLine.frame.origin.y - 190, cellWidth + trackThickness, 170)
-        verticalRangeSlider.action = "updateRange:"
+        verticalRangeSlider.trackCornerRadius = CGFloat(verticalCornerRadius.state)
+        verticalRangeSlider.frame = CGRect(x: self.view.frame.width / 2, y: horizontalLine.frame.origin.y - 190, width: cellWidth + trackThickness, height: 170)
+        verticalRangeSlider.action = #selector(ViewController.updateRange(_:))
         verticalRangeSlider.target = self
         
         self.view.addSubview(verticalRangeSlider)
@@ -227,9 +247,39 @@ class ViewController: NSViewController {
     // @function        updateRange
     // Called on range slider update
     //
-    func updateRange(sender: AnyObject) {
+    func updateRange(_ sender: AnyObject) {
         self.updateTextFields()
     }
 
+}
+
+// Note: For some reason, makeTouchBar() is not being called, but I don't have time to 
+// figure out why. This is exactly how I have it implemented in another app, so no idea.
+// But this is still good example code for implemenation in other apps.
+
+@available(OSX 10.12.2, *)
+fileprivate extension NSTouchBarItemIdentifier {
+    static var rangeSlider = NSTouchBarItemIdentifier("com.jms.JMSRangeSlider.rangeSlider")
+}
+
+@available(OSX 10.12.2, *)
+extension ViewController : NSTouchBarDelegate {
+    override func makeTouchBar() -> NSTouchBar? {
+        let touchBar = NSTouchBar()
+        touchBar.delegate = self
+        touchBar.defaultItemIdentifiers = [.rangeSlider]
+        return touchBar
+    }
+    
+    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
+        if identifier == .rangeSlider {
+            return JMSRangeSlider.touchBarItem(identifier: identifier, width: 260.0, target: self, action: #selector(touchBarRangeChanged(_:))).0
+        }
+        return nil
+    }
+    
+    @objc fileprivate func touchBarRangeChanged(_ sender: JMSRangeSlider) {
+        Swift.print("TOUCH BAR lower: \(sender.lowerValue)  upper: \(sender.upperValue)")
+    }
 }
 
